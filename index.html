@@ -1,83 +1,131 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edison's Design Portfolio</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
-            background-color: #f4f4f9;
-            padding: 20px;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            color: #333;
         }
         
-        /* This puts the images side-by-side */
-        .gallery {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap; /* Allows wrapping on smaller screens */
-            gap: 30px; /* Space between images */
-            margin-top: 30px;
+        /* Clean, professional header */
+        header {
+            padding: 50px 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+        }
+        h1 { margin: 0 0 10px 0; font-size: 2.5em; }
+        p { margin: 0; color: #666; font-size: 1.1em; }
+
+        /* Masonry Gallery - Handles different resolutions */
+        .masonry-gallery {
+            column-count: 3; /* 3 columns on desktop */
+            column-gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
-        /* This controls the size and look of the images */
-        .gallery img {
-            max-width: 400px; /* Makes the images much smaller */
+        .masonry-item {
+            display: inline-block;
             width: 100%;
-            border: 2px solid #ccc;
-            box-shadow: 5px 5px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease; /* Smooth animation */
-            cursor: zoom-in; /* Changes mouse to a magnifying glass */
+            margin-bottom: 20px;
+            border-radius: 8px; /* Soft, modern corners */
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: #fff;
         }
 
-        /* Hover effect: slightly grow the image when the mouse is over it */
-        .gallery img:hover {
-            transform: scale(1.05);
-            box-shadow: 8px 8px 15px rgba(0,0,0,0.2);
+        .masonry-item:hover {
+            transform: translateY(-5px); /* Image lifts up slightly */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
-        /* Contact button styling */
+        .masonry-item img {
+            width: 100%;
+            height: auto; /* Forces image to keep its original aspect ratio */
+            display: block;
+            cursor: zoom-in;
+        }
+
+        /* Responsive Design: Adapts to screen sizes */
+        @media (max-width: 900px) {
+            .masonry-gallery { column-count: 2; } /* 2 columns for tablets */
+        }
+        @media (max-width: 600px) {
+            .masonry-gallery { column-count: 1; } /* 1 column for phones */
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 60px 20px;
+            background-color: #ffffff;
+            margin-top: 50px;
+            border-top: 1px solid #eaeaea;
+        }
+        
         .contact-btn {
             display: inline-block;
-            padding: 15px 30px;
-            background-color: #007bff;
+            padding: 15px 35px;
+            background-color: #1a1a1a; /* Sleek black button */
             color: white;
             text-decoration: none;
             font-size: 18px;
-            border-radius: 5px;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+            border-radius: 30px; /* Pill-shaped button */
+            margin-top: 20px;
+            transition: background-color 0.3s;
         }
-
+        
         .contact-btn:hover {
-            background-color: #0056b3; /* Darkens button on hover */
+            background-color: #4a4a4a;
         }
     </style>
 </head>
 <body>
 
-    <h1>Welcome to My Design Portfolio</h1>
-    <p>Here are some of my recent posters and card models.</p>
+    <header>
+        <h1>My Design Portfolio</h1>
+        <p>Showcasing my latest posters and card models</p>
+    </header>
 
     <!-- Gallery Section -->
-    <div class="gallery">
-        <!-- First Image: Wrapped in a link so clicking it opens the full size -->
-        <a href="Untitled-1-01.png" target="_blank" title="Click to expand">
+    <div class="masonry-gallery">
+        
+        <!-- Image 1 -->
+        <a href="Untitled-1-01.png" target="_blank" class="masonry-item" title="Click to expand">
             <img src="Untitled-1-01.png" alt="Design 1">
         </a>
         
-        <!-- Second Image -->
-        <a href="onevoice-01.png" target="_blank" title="Click to expand">
+        <!-- Image 2 -->
+        <a href="onevoice-01.png" target="_blank" class="masonry-item" title="Click to expand">
             <img src="onevoice-01.png" alt="Design 2">
         </a>
+
+        <!-- PRO TIP: To make the page scrollable, just upload more images 
+             and copy/paste the block below for each new image! -->
+             
+        <!-- 
+        <a href="YOUR_NEW_IMAGE.png" target="_blank" class="masonry-item">
+            <img src="YOUR_NEW_IMAGE.png" alt="Design 3">
+        </a> 
+        -->
+
     </div>
 
     <!-- Contact Section -->
-    <hr style="width: 50%; margin: 40px auto; border: 1px solid #ccc;">
-    <h2>Let's Work Together!</h2>
-    <p>If you are interested in my design services, I would love to hear from you.</p>
-    
-    <a href="mailto:edisonochien24@gmail.com" class="contact-btn">Send Me an Email</a>
-    
-    <br><br>
+    <div class="contact-section">
+        <h2>Let's Work Together!</h2>
+        <p>If you are interested in my design services, I would love to hear from you.</p>
+        <a href="mailto:edisonochien24@gmail.com" class="contact-btn">Send Me an Email</a>
+    </div>
 
 </body>
 </html>
