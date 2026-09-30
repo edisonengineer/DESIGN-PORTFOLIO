@@ -3,154 +3,338 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edison's Design Portfolio</title>
+    <title>Edison Ochieng | Design & Engineering Portfolio</title>
     <style>
+        /* Global Styles & Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: center;
-            background-color: #f8f9fa;
             margin: 0;
             padding: 0;
+            background-color: #f8f9fa;
             color: #333;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            color: #1a1a1a;
         }
         
-        /* Clean, professional header */
-        header {
-            padding: 50px 20px;
-            background-color: #ffffff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            margin-bottom: 40px;
+        /* Sticky Navigation Bar */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            box-sizing: border-box;
         }
-        h1 { margin: 0 0 10px 0; font-size: 2.5em; }
-        p { margin: 0; color: #666; font-size: 1.1em; }
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .nav-links {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-links li {
+            margin-left: 30px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: #007bff;
+        }
 
-        /* Masonry Gallery - Handles different resolutions */
-        .masonry-gallery {
-            column-count: 3; /* 3 columns on desktop */
-            column-gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
             padding: 0 20px;
         }
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+        }
+        .hero p {
+            font-size: 1.2em;
+            color: #555;
+            max-width: 600px;
+            margin-bottom: 30px;
+        }
+        .btn-primary {
+            display: inline-block;
+            padding: 15px 35px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 30px;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
 
-        /* The Card Container */
+        /* Standard Section Padding */
+        section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            width: 60px;
+            height: 4px;
+            background-color: #007bff;
+            display: block;
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* About Section */
+        .about-content {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+        .about-text {
+            flex: 1;
+            font-size: 1.1em;
+        }
+        .about-image {
+            flex: 1;
+            background-color: #e9ecef;
+            height: 400px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #adb5bd;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Portfolio / Masonry Gallery */
+        .masonry-gallery {
+            column-count: 3;
+            column-gap: 20px;
+        }
         .masonry-item {
             display: inline-block;
             width: 100%;
             margin-bottom: 20px;
-            border-radius: 8px; /* Soft, modern corners */
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             background-color: #fff;
-            text-align: left; /* Aligns text to the left inside the card */
         }
-
         .masonry-item:hover {
-            transform: translateY(-5px); /* Card lifts up slightly */
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
         }
-
         .masonry-item img {
             width: 100%;
             height: auto;
             display: block;
-            cursor: zoom-in;
-            border-bottom: 1px solid #eaeaea; /* Separates image from text */
+            border-bottom: 1px solid #eaeaea;
         }
-
-        /* Description Text Styles */
         .description {
-            padding: 15px 20px;
+            padding: 20px;
         }
-        
         .description h3 {
-            margin: 0 0 8px 0;
-            font-size: 1.2em;
-            color: #222;
+            margin: 0 0 10px 0;
+            font-size: 1.3em;
         }
-
         .description p {
             margin: 0;
             font-size: 0.95em;
-            color: #555;
-            line-height: 1.5;
+            color: #666;
+        }
+
+        /* Contact Section */
+        .contact-container {
+            display: flex;
+            gap: 40px;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        .contact-info {
+            flex: 1;
+        }
+        .contact-form {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+        .contact-form textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        .contact-form button {
+            padding: 15px;
+            background-color: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .contact-form button:hover {
+            background-color: #4a4a4a;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 50px;
         }
 
         /* Responsive Design */
         @media (max-width: 900px) {
             .masonry-gallery { column-count: 2; }
+            .about-content, .contact-container { flex-direction: column; }
+            nav { padding: 15px 20px; }
+            .nav-links li { margin-left: 15px; }
         }
         @media (max-width: 600px) {
             .masonry-gallery { column-count: 1; }
-        }
-
-        /* Contact Section */
-        .contact-section {
-            padding: 60px 20px;
-            background-color: #ffffff;
-            margin-top: 50px;
-            border-top: 1px solid #eaeaea;
-            text-align: center;
-        }
-        
-        .contact-btn {
-            display: inline-block;
-            padding: 15px 35px;
-            background-color: #1a1a1a;
-            color: white;
-            text-decoration: none;
-            font-size: 18px;
-            border-radius: 30px;
-            margin-top: 20px;
-            transition: background-color 0.3s;
-        }
-        
-        .contact-btn:hover {
-            background-color: #4a4a4a;
+            .hero h1 { font-size: 2.5em; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>My Design Portfolio</h1>
-        <p>Showcasing my latest posters and card models</p>
+    <!-- Navigation -->
+    <nav>
+        <a href="#home" class="logo">EO.</a>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="home" class="hero">
+        <h1>Hi, I'm Edison Ochieng</h1>
+        <p>A designer and mechanical engineering student blending technical precision with creative visual communication.</p>
+        <a href="#portfolio" class="btn-primary">View My Work</a>
     </header>
 
-    <!-- Gallery Section -->
-    <div class="masonry-gallery">
-        
-        <!-- Item 1 -->
-        <div class="masonry-item">
-            <a href="Untitled-1-01.png" target="_blank" title="Click to expand">
-                <img src="Untitled-1-01.png" alt="Design 1">
-            </a>
-            <div class="description">
-                <h3>Card Model Concept</h3>
-                <p>A detailed 3D card model design showcasing structural layout and visual hierarchy.</p>
+    <!-- About Section -->
+    <section id="about">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>I am a passionate designer and mechanical engineering student based in Nairobi. My background lies at the intersection of technical engineering and digital design.</p>
+                <p>I specialize in 3D CAD modeling using tools like Autodesk Fusion, Inventor, and Onshape, while also expanding my skill set into software development and system design. Whether I am drafting a robotics concept, automating engineering calculations, or designing a promotional poster, I approach every project with a focus on structure, clarity, and modern aesthetics.</p>
+                <p>When I'm not designing or coding, you can find me exploring new technologies, contributing as a Local Guide, or expanding my programming knowledge.</p>
+            </div>
+            <div class="about-image">
+                <p>[Your Profile Photo Here]</p>
             </div>
         </div>
-        
-        <!-- Item 2 -->
-        <div class="masonry-item">
-            <a href="onevoice-01.png" target="_blank" title="Click to expand">
-                <img src="onevoice-01.png" alt="Design 2">
-            </a>
-            <div class="description">
-                <h3>OneVoice Poster</h3>
-                <p>A promotional poster created to emphasize clear messaging and modern aesthetic.</p>
-            </div>
-        </div>
+    </section>
 
-    </div>
+    <!-- Portfolio Section -->
+    <section id="portfolio">
+        <h2 class="section-title">Featured Projects</h2>
+        
+        <div class="masonry-gallery">
+            <!-- Project 1 -->
+            <div class="masonry-item">
+                <a href="Untitled-1-01.png" target="_blank" title="Click to expand">
+                    <img src="Untitled-1-01.png" alt="Card Model Concept">
+                </a>
+                <div class="description">
+                    <h3>Card Model Concept</h3>
+                    <p>A detailed 3D card model design showcasing structural layout and visual hierarchy.</p>
+                </div>
+            </div>
+            
+            <!-- Project 2 -->
+            <div class="masonry-item">
+                <a href="onevoice-01.png" target="_blank" title="Click to expand">
+                    <img src="onevoice-01.png" alt="OneVoice Poster">
+                </a>
+                <div class="description">
+                    <h3>OneVoice Poster</h3>
+                    <p>A promotional poster created to emphasize clear messaging and modern aesthetic.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Contact Section -->
-    <div class="contact-section">
-        <h2>Let's Work Together!</h2>
-        <p>If you are interested in my design services, I would love to hear from you.</p>
-        <a href="mailto:edisonochien24@gmail.com" class="contact-btn">Send Me an Email</a>
-    </div>
+    <section id="contact">
+        <h2 class="section-title">Let's Work Together</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Get In Touch</h3>
+                <p>Interested in collaborating on a design project, CAD modeling, or discussing engineering concepts? Drop me a message!</p>
+                <br>
+                <p><strong>Email:</strong> edisonochien24@gmail.com</p>
+                <p><strong>Location:</strong> Nairobi, Kenya</p>
+            </div>
+            
+            <!-- Visual Contact Form -->
+            <form class="contact-form" action="mailto:edisonochien24@gmail.com" method="post" enctype="text/plain">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Your Message" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Edison Ochieng. All Rights Reserved.</p>
+    </footer>
 
 </body>
 </html>
