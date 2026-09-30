@@ -1,340 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edison Ochieng | Design & Engineering Portfolio</title>
-    <style>
-        /* Global Styles & Smooth Scrolling */
-        html {
-            scroll-behavior: smooth;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f8f9fa;
-            color: #333;
-            line-height: 1.6;
-        }
-        h1, h2, h3 {
-            color: #1a1a1a;
-        }
-        
-        /* Sticky Navigation Bar */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background-color: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 50px;
-            box-sizing: border-box;
-        }
-        .logo {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #007bff;
-            text-decoration: none;
-        }
-        .nav-links {
-            list-style: none;
-            display: flex;
-            margin: 0;
-            padding: 0;
-        }
-        .nav-links li {
-            margin-left: 30px;
-        }
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 600;
-            transition: color 0.3s;
-        }
-        .nav-links a:hover {
-            color: #007bff;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edison Ochieng | Designer & Mechanical Engineering Student</title>
+<meta name="description" content="Portfolio of Edison Ochieng: mechanical design, 3D CAD, robotics and graphic design.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#eef1f4; --surface:#ffffff; --ink:#15233b; --muted:#56637a;
+  --line:#d3dae3; --accent:#e8520f; --accent-ink:#ffffff; --dark:#0f1a2e;
+  --head:'Bricolage Grotesque','Segoe UI',Arial,sans-serif;
+  --body:'IBM Plex Sans','Segoe UI',Arial,sans-serif;
+  --nav-h:68px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:var(--nav-h)}
+body{margin:0;font-family:var(--body);background:var(--paper);color:var(--ink);line-height:1.65;font-size:1.05rem}
+h1,h2,h3{font-family:var(--head);line-height:1.1;margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+section{padding:96px 0}
+.section-title{font-size:clamp(2rem,4vw,2.9rem);font-weight:800;letter-spacing:-.02em;margin-bottom:14px}
+.section-lead{color:var(--muted);max-width:56ch;margin:0 0 48px}
 
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
-            padding: 0 20px;
-        }
-        .hero h1 {
-            font-size: 3.5em;
-            margin-bottom: 10px;
-        }
-        .hero p {
-            font-size: 1.2em;
-            color: #555;
-            max-width: 600px;
-            margin-bottom: 30px;
-        }
-        .btn-primary {
-            display: inline-block;
-            padding: 15px 35px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            font-size: 18px;
-            border-radius: 30px;
-            transition: background-color 0.3s, transform 0.2s;
-            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
-        }
-        .btn-primary:hover {
-            background-color: #0056b3;
-            transform: translateY(-2px);
-        }
+/* Navigation */
+.nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:50;background:rgba(238,241,244,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:100%}
+.brand{font-family:var(--head);font-weight:800;font-size:1.25rem;text-decoration:none;letter-spacing:-.01em}
+.nav ul{display:flex;gap:6px;list-style:none;margin:0;padding:0}
+.nav ul a{display:block;padding:8px 14px;border-radius:8px;text-decoration:none;font-weight:500;font-size:.98rem;color:var(--muted);transition:color .2s,background .2s}
+.nav ul a:hover,.nav ul a.active{color:var(--ink);background:#e0e6ed}
+.menu-btn{display:none;background:none;border:1px solid var(--line);border-radius:8px;width:44px;height:44px;cursor:pointer;color:var(--ink)}
+.menu-btn svg{width:22px;height:22px}
 
-        /* Standard Section Padding */
-        section {
-            padding: 80px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .section-title {
-            text-align: center;
-            font-size: 2.5em;
-            margin-bottom: 50px;
-            position: relative;
-        }
-        .section-title::after {
-            content: '';
-            width: 60px;
-            height: 4px;
-            background-color: #007bff;
-            display: block;
-            margin: 10px auto 0;
-            border-radius: 2px;
-        }
+/* Hero */
+.hero{min-height:100vh;display:flex;align-items:center;padding:calc(var(--nav-h) + 40px) 0 72px;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:48px 48px;background-position:-1px -1px}
+.hero .wrap{display:grid;grid-template-columns:1.25fr .75fr;gap:48px;align-items:center}
+.hero h1{font-size:clamp(2.6rem,6.4vw,5rem);font-weight:800;letter-spacing:-.03em}
+.hero p{font-size:1.2rem;color:var(--muted);max-width:46ch;margin:24px 0 36px}
+.btn{display:inline-block;padding:15px 32px;border-radius:10px;background:var(--accent);color:var(--accent-ink);font-weight:500;text-decoration:none;border:0;cursor:pointer;font:inherit;font-weight:500;transition:background .2s,transform .2s}
+.btn:hover{background:#c94408;transform:translateY(-2px)}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink);margin-left:10px}
+.btn.ghost:hover{background:var(--ink);color:#fff}
+.gear{width:100%;max-width:360px;justify-self:center;color:var(--ink)}
+.gear .spin{transform-origin:150px 150px;animation:spin 60s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-        /* About Section */
-        .about-content {
-            display: flex;
-            gap: 40px;
-            align-items: center;
-        }
-        .about-text {
-            flex: 1;
-            font-size: 1.1em;
-        }
-        .about-image {
-            flex: 1;
-            background-color: #e9ecef;
-            height: 400px;
-            border-radius: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #adb5bd;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
+/* About */
+.about{background:var(--surface)}
+.about .wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:64px;align-items:center}
+.portrait{aspect-ratio:4/5;border-radius:14px;background:var(--paper);border:2px dashed var(--line);display:flex;align-items:center;justify-content:center;color:var(--muted);text-align:center;padding:20px;font-size:.95rem}
+.about p{color:var(--muted);margin:0 0 18px}
+.tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;padding:0;list-style:none}
+.tags li{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:6px 16px;font-size:.92rem;font-weight:500}
 
-        /* Portfolio / Masonry Gallery */
-        .masonry-gallery {
-            column-count: 3;
-            column-gap: 20px;
-        }
-        .masonry-item {
-            display: inline-block;
-            width: 100%;
-            margin-bottom: 20px;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            background-color: #fff;
-        }
-        .masonry-item:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-        }
-        .masonry-item img {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-bottom: 1px solid #eaeaea;
-        }
-        .description {
-            padding: 20px;
-        }
-        .description h3 {
-            margin: 0 0 10px 0;
-            font-size: 1.3em;
-        }
-        .description p {
-            margin: 0;
-            font-size: 0.95em;
-            color: #666;
-        }
+/* Gallery (masonry + hover kept from original) */
+.masonry-gallery{column-count:3;column-gap:24px}
+.masonry-item{display:inline-block;width:100%;margin-bottom:24px;border-radius:12px;overflow:hidden;background:var(--surface);border:1px solid var(--line);box-shadow:0 4px 12px rgba(21,35,59,.08);transition:transform .3s ease,box-shadow .3s ease;text-align:left}
+.masonry-item:hover{transform:translateY(-5px);box-shadow:0 14px 28px rgba(21,35,59,.18)}
+.masonry-item img{width:100%;height:auto;display:block;cursor:zoom-in;border-bottom:1px solid var(--line)}
+.description{padding:16px 20px 20px}
+.description h3{font-size:1.2rem;margin-bottom:6px}
+.description p{margin:0;font-size:.96rem;color:var(--muted);line-height:1.55}
 
-        /* Contact Section */
-        .contact-container {
-            display: flex;
-            gap: 40px;
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-        .contact-info {
-            flex: 1;
-        }
-        .contact-form {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .contact-form input, .contact-form textarea {
-            width: 100%;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-family: inherit;
-            box-sizing: border-box;
-        }
-        .contact-form textarea {
-            height: 150px;
-            resize: vertical;
-        }
-        .contact-form button {
-            padding: 15px;
-            background-color: #1a1a1a;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .contact-form button:hover {
-            background-color: #4a4a4a;
-        }
+/* Contact */
+.contact{background:var(--dark);color:#e7ecf4}
+.contact .section-lead{color:#a9b5c9}
+.contact .wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px}
+.direct a.mail{font-family:var(--head);font-weight:700;font-size:1.3rem;color:#fff;text-decoration-color:var(--accent);text-underline-offset:6px;word-break:break-all}
+.direct small{display:block;color:#a9b5c9;margin-bottom:6px}
+form{display:grid;gap:18px}
+label{display:grid;gap:8px;font-weight:500;font-size:.95rem}
+input,textarea{font:inherit;color:#fff;background:#18263f;border:1px solid #2c3c59;border-radius:10px;padding:13px 15px;width:100%}
+input::placeholder,textarea::placeholder{color:#7f8da6}
+input:focus,textarea:focus{outline:2px solid var(--accent);border-color:transparent}
+textarea{min-height:150px;resize:vertical}
+form .btn{justify-self:start}
+.note{min-height:1.4em;margin:0;color:#ffb48f;font-size:.95rem}
 
-        /* Footer */
-        footer {
-            background-color: #1a1a1a;
-            color: white;
-            text-align: center;
-            padding: 30px 20px;
-            margin-top: 50px;
-        }
+/* Footer */
+footer{background:#0a1322;color:#a9b5c9;padding:32px 0;font-size:.95rem}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.social{display:flex;gap:10px}
+.social a{width:44px;height:44px;border-radius:50%;border:1px solid #2c3c59;display:flex;align-items:center;justify-content:center;color:#e7ecf4;transition:background .2s,border-color .2s}
+.social a:hover{background:var(--accent);border-color:var(--accent)}
+.social svg{width:20px;height:20px}
 
-        /* Responsive Design */
-        @media (max-width: 900px) {
-            .masonry-gallery { column-count: 2; }
-            .about-content, .contact-container { flex-direction: column; }
-            nav { padding: 15px 20px; }
-            .nav-links li { margin-left: 15px; }
-        }
-        @media (max-width: 600px) {
-            .masonry-gallery { column-count: 1; }
-            .hero h1 { font-size: 2.5em; }
-        }
-    </style>
+/* Responsive */
+@media (max-width:900px){
+  .masonry-gallery{column-count:2}
+  .hero .wrap,.about .wrap,.contact .wrap{grid-template-columns:1fr;gap:40px}
+  .gear{max-width:240px;order:-1;justify-self:start}
+  .portrait{max-width:320px}
+  section{padding:72px 0}
+}
+@media (max-width:700px){
+  .menu-btn{display:block}
+  .nav ul{position:absolute;top:var(--nav-h);left:0;right:0;flex-direction:column;background:var(--paper);border-bottom:1px solid var(--line);padding:10px 24px 18px;display:none}
+  .nav ul.open{display:flex}
+  .btn.ghost{margin:12px 0 0}
+}
+@media (max-width:600px){.masonry-gallery{column-count:1}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.gear .spin{animation:none}*{transition:none!important}}
+</style>
 </head>
 <body>
 
-    <!-- Navigation -->
-    <nav>
-        <a href="#home" class="logo">EO.</a>
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#portfolio">Portfolio</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <a href="#home" class="brand">Edison Ochieng</a>
+    <button class="menu-btn" id="menuBtn" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <ul id="navLinks">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
 
-    <!-- Hero Section -->
-    <header id="home" class="hero">
-        <h1>Hi, I'm Edison Ochieng</h1>
-        <p>A designer and mechanical engineering student blending technical precision with creative visual communication.</p>
-        <a href="#portfolio" class="btn-primary">View My Work</a>
-    </header>
+<header class="hero" id="home">
+  <div class="wrap">
+    <div>
+      <h1>Designer and mechanical engineering student.</h1>
+      <p>I turn ideas into parts, posters and prototypes that work as well as they look.</p>
+      <a href="#portfolio" class="btn">View My Work</a>
+      <a href="#contact" class="btn ghost">Get in touch</a>
+    </div>
+    <svg class="gear" viewBox="0 0 300 300" fill="none" stroke="currentColor" aria-hidden="true">
+      <g class="spin">
+        <circle cx="150" cy="150" r="118" stroke-width="22" stroke-dasharray="18.5 18.5" />
+        <circle cx="150" cy="150" r="104" stroke-width="3"/>
+        <circle cx="150" cy="150" r="74" stroke-width="3"/>
+        <circle cx="150" cy="150" r="22" stroke="var(--accent)" stroke-width="6"/>
+        <path d="M150 128V76M150 172v52M128 150H76M172 150h52M134.4 134.4l-37-37M165.6 165.6l37 37M165.6 134.4l37-37M134.4 165.6l-37 37" stroke-width="3"/>
+      </g>
+    </svg>
+  </div>
+</header>
 
-    <!-- About Section -->
-    <section id="about">
-        <h2 class="section-title">About Me</h2>
-        <div class="about-content">
-            <div class="about-text">
-                <p>I am a passionate designer and mechanical engineering student based in Nairobi. My background lies at the intersection of technical engineering and digital design.</p>
-                <p>I specialize in 3D CAD modeling using tools like Autodesk Fusion, Inventor, and Onshape, while also expanding my skill set into software development and system design. Whether I am drafting a robotics concept, automating engineering calculations, or designing a promotional poster, I approach every project with a focus on structure, clarity, and modern aesthetics.</p>
-                <p>When I'm not designing or coding, you can find me exploring new technologies, contributing as a Local Guide, or expanding my programming knowledge.</p>
-            </div>
-            <div class="about-image">
-                <p>[Your Profile Photo Here]</p>
-            </div>
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="portrait" role="img" aria-label="Profile picture placeholder">Profile picture<br>(replace with your photo)</div>
+    <div>
+      <h2 class="section-title">About me</h2>
+      <p>I'm a mechanical engineering student who likes the whole journey of a product: sketching the idea, modelling it in 3D, testing it, and presenting it well.</p>
+      <p>My work centres on mechanical design and 3D CAD in Autodesk Fusion, Inventor and Onshape. I also build robotics projects and write software to control and automate them. Alongside engineering, I design posters and visuals that make technical ideas easy to understand.</p>
+      <ul class="tags">
+        <li>Mechanical design</li><li>Autodesk Fusion</li><li>Inventor</li><li>Onshape</li><li>Robotics</li><li>Software development</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="portfolio">
+  <div class="wrap">
+    <h2 class="section-title">Featured projects</h2>
+    <p class="section-lead">Posters and card models I have designed. Select an image to view it full size.</p>
+    <div class="masonry-gallery">
+      <div class="masonry-item">
+        <a href="Untitled-1-01.png" target="_blank" rel="noopener" title="Click to expand">
+          <img src="Untitled-1-01.png" alt="Card model concept" loading="lazy">
+        </a>
+        <div class="description">
+          <h3>Card Model Concept</h3>
+          <p>A detailed 3D card model design showcasing structural layout and visual hierarchy.</p>
         </div>
-    </section>
-
-    <!-- Portfolio Section -->
-    <section id="portfolio">
-        <h2 class="section-title">Featured Projects</h2>
-        
-        <div class="masonry-gallery">
-            <!-- Project 1 -->
-            <div class="masonry-item">
-                <a href="Untitled-1-01.png" target="_blank" title="Click to expand">
-                    <img src="Untitled-1-01.png" alt="Card Model Concept">
-                </a>
-                <div class="description">
-                    <h3>Card Model Concept</h3>
-                    <p>A detailed 3D card model design showcasing structural layout and visual hierarchy.</p>
-                </div>
-            </div>
-            
-            <!-- Project 2 -->
-            <div class="masonry-item">
-                <a href="onevoice-01.png" target="_blank" title="Click to expand">
-                    <img src="onevoice-01.png" alt="OneVoice Poster">
-                </a>
-                <div class="description">
-                    <h3>OneVoice Poster</h3>
-                    <p>A promotional poster created to emphasize clear messaging and modern aesthetic.</p>
-                </div>
-            </div>
+      </div>
+      <div class="masonry-item">
+        <a href="onevoice-01.png" target="_blank" rel="noopener" title="Click to expand">
+          <img src="onevoice-01.png" alt="OneVoice poster" loading="lazy">
+        </a>
+        <div class="description">
+          <h3>OneVoice Poster</h3>
+          <p>A promotional poster created to emphasize clear messaging and modern aesthetic.</p>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Contact Section -->
-    <section id="contact">
-        <h2 class="section-title">Let's Work Together</h2>
-        <div class="contact-container">
-            <div class="contact-info">
-                <h3>Get In Touch</h3>
-                <p>Interested in collaborating on a design project, CAD modeling, or discussing engineering concepts? Drop me a message!</p>
-                <br>
-                <p><strong>Email:</strong> edisonochien24@gmail.com</p>
-                <p><strong>Location:</strong> Nairobi, Kenya</p>
-            </div>
-            
-            <!-- Visual Contact Form -->
-            <form class="contact-form" action="mailto:edisonochien24@gmail.com" method="post" enctype="text/plain">
-                <input type="text" placeholder="Your Name" required>
-                <input type="email" placeholder="Your Email" required>
-                <textarea placeholder="Your Message" required></textarea>
-                <button type="submit">Send Message</button>
-            </form>
-        </div>
-    </section>
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="direct">
+      <h2 class="section-title">Let's work together</h2>
+      <p class="section-lead">If you are interested in my design services, send me a message and I will reply soon.</p>
+      <small>Email me directly</small>
+      <a class="mail" href="mailto:edisonochien24@gmail.com">edisonochien24@gmail.com</a>
+    </div>
+    <form id="contactForm" novalidate>
+      <label>Name<input type="text" name="name" placeholder="Your name" autocomplete="name"></label>
+      <label>Email<input type="email" name="email" placeholder="you@example.com" autocomplete="email"></label>
+      <label>Message<textarea name="message" placeholder="Tell me about your project"></textarea></label>
+      <button type="submit" class="btn">Send message</button>
+      <p class="note" id="formNote" role="status"></p>
+    </form>
+  </div>
+</section>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 Edison Ochieng. All Rights Reserved.</p>
-    </footer>
+<footer>
+  <div class="wrap">
+    <span>&copy; <span id="year">2026</span> Edison Ochieng. All rights reserved.</span>
+    <div class="social">
+      <a href="https://github.com/" aria-label="GitHub" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.42c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.77.11 3.06.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.4-5.27 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg></a>
+      <a href="https://www.linkedin.com/" aria-label="LinkedIn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11.5H3zM9.5 9.75h3.83v1.57h.06c.53-1 1.84-2.07 3.78-2.07 4.04 0 4.78 2.66 4.78 6.12v5.88h-4v-5.2c0-1.24-.02-2.83-1.73-2.83-1.73 0-2 1.35-2 2.74v5.29h-4z"/></svg></a>
+      <a href="mailto:edisonochien24@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+    </div>
+  </div>
+</footer>
 
+<script>
+  // Mobile menu
+  const btn = document.getElementById('menuBtn'), links = document.getElementById('navLinks');
+  btn.addEventListener('click', () => {
+    const open = links.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+  links.addEventListener('click', e => { if (e.target.tagName === 'A') { links.classList.remove('open'); btn.setAttribute('aria-expanded', false); } });
+
+  // Highlight current section in nav
+  const anchors = [...links.querySelectorAll('a')];
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => { if (en.isIntersecting) anchors.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id)); });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  ['home','about','portfolio','contact'].forEach(id => io.observe(document.getElementById(id)));
+
+  // Visual-only contact form
+  document.getElementById('contactForm').addEventListener('submit', e => {
+    e.preventDefault();
+    document.getElementById('formNote').textContent = 'This form is for show only. Please email me directly using the address on the left.';
+  });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
