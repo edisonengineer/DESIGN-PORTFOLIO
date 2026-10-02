@@ -339,3 +339,39 @@ img { max-width: 100%; }
     #pdf-grid { gap: 28px 20px; grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 400px) { #pdf-grid { grid-template-columns: 1fr; } }
+
+
+/* =====================================================================
+   PDF VIEWER: flipbook look (grey > white > grey), focus mode
+   ===================================================================== */
+.pdf-back-nav { display: none; }
+body.pdf-mode .top-nav .nav-link { display: none; }
+body.pdf-mode .top-nav .pdf-back-nav { display: inline-flex; align-items: center; }
+body.pdf-mode .software-nav { display: none; }
+
+.pdf-viewer { background: linear-gradient(to bottom, #858585 0%, #ffffff 22%, #ffffff 72%, #858585 100%); }
+.pdf-toolbar { position: relative; justify-content: center; gap: 6px; }
+.pdf-title { display: none; }
+.pdf-back { position: absolute; left: calc(12px + env(safe-area-inset-left)); top: calc(8px + env(safe-area-inset-top)); }
+.pdf-btn { color: #fff; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.35)); }
+.pdf-btn:hover, .pdf-btn:active { color: #e8e8e8; transform: scale(1.08); }
+.pdf-nav { color: #b5b5b5; }
+.pdf-nav:hover { color: #555; }
+.pdf-counter { color: #fff; font-weight: 600; text-shadow: 0 1px 2px rgba(0,0,0,0.4); }
+#pdf-slider { accent-color: #fff; }
+.pdf-loading { color: #444; text-align: center; padding: 0 24px; }
+.pdf-spinner { border-color: rgba(0,0,0,0.12); border-top-color: #444; }
+.pdf-page { box-shadow: 0 0 18px rgba(0,0,0,0.15); }
+
+.pdf-thumbs { position: absolute; left: 0; right: 0; top: 64px; bottom: 0; z-index: 5; background: rgba(24,24,24,0.96); overflow-y: auto; padding: 24px 5%; display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 18px; align-content: start; }
+.pdf-thumbs[hidden] { display: none; }
+.pdf-thumb-item { background: none; border: 0; padding: 0; cursor: pointer; color: #bbb; font-size: 0.75rem; display: flex; flex-direction: column; align-items: center; gap: 6px; min-height: 140px; }
+.pdf-thumb-item canvas { width: 100%; height: auto; box-shadow: 0 6px 16px rgba(0,0,0,0.5); transition: transform 0.25s ease; }
+.pdf-thumb-item:hover canvas { transform: translateY(-3px); }
+.pdf-thumb-item span { order: 2; }
+
+@media (max-width: 768px) {
+    .pdf-btn { width: 44px; height: 44px; }
+    .pdf-back { left: 4px; }
+    .pdf-toolbar { padding-left: 52px; padding-right: 8px; justify-content: flex-end; }
+}
