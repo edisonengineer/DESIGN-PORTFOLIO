@@ -1,19 +1,14 @@
 let activeGalleryId = '';
 let isGraphicProject = false;
 
-// --- LEVEL 1: FILTER MAIN CATEGORIES ---
 function filterCategory(category, event) {
     resetToHome(); 
-    
-    // Manage active state on Top Nav
     document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
     if (event) event.currentTarget.classList.add('active');
 
-    // Hide all Sub-Navs and reset their buttons
     document.querySelectorAll('.software-nav').forEach(nav => nav.classList.add('hidden'));
     document.querySelectorAll('.software-link').forEach(link => link.classList.remove('active'));
     
-    // Show corresponding Sub-Nav
     if (category === 'engineering') {
         document.getElementById('nav-engineering').classList.remove('hidden');
         document.querySelector('#nav-engineering .software-link').classList.add('active');
@@ -22,7 +17,6 @@ function filterCategory(category, event) {
         document.querySelector('#nav-graphic .software-link').classList.add('active');
     }
 
-    // Filter main grid
     const albums = document.querySelectorAll('.album-card');
     albums.forEach(album => {
         if (category === 'all' || album.classList.contains(category)) {
@@ -33,14 +27,11 @@ function filterCategory(category, event) {
     });
 }
 
-// --- LEVEL 2: FILTER SPECIFIC SOFTWARE ---
 function filterSoftware(category, software, event) {
-    // Manage active state on Sub Nav
     const currentNav = document.getElementById(`nav-${category}`);
     currentNav.querySelectorAll('.software-link').forEach(link => link.classList.remove('active'));
     if (event) event.currentTarget.classList.add('active');
 
-    // Filter main grid by software
     const albums = document.querySelectorAll('.album-card');
     albums.forEach(album => {
         if (software === 'all') {
@@ -51,8 +42,8 @@ function filterSoftware(category, software, event) {
     });
 }
 
-// --- HERO COVER TRANSITION ---
-function openHero(title, date, bgImageUrl, galleryId) {
+// FIX: Added 'isGraphic' as a direct parameter so it never fails
+function openHero(title, date, bgImageUrl, galleryId, isGraphic) {
     document.getElementById('album-grid').classList.remove('active');
     document.getElementById('internal-gallery').classList.remove('active');
     document.getElementById('hero-cover').classList.add('active');
@@ -62,34 +53,26 @@ function openHero(title, date, bgImageUrl, galleryId) {
     document.getElementById('hero-bg').style.backgroundImage = `url('${bgImageUrl}')`;
     
     activeGalleryId = galleryId;
-    
-    // Determine if it's a graphic project so we can hide CAD views (Isometric, Top, etc.)
-    const clickedCard = event.currentTarget;
-    isGraphicProject = clickedCard.classList.contains('graphic');
+    isGraphicProject = isGraphic;
 }
 
-// --- OPEN INTERNAL GALLERY ---
 function openGallery() {
     document.getElementById('hero-cover').classList.remove('active');
     document.getElementById('internal-gallery').classList.add('active');
     
-    // Show/Hide the CAD view navigation based on project type
     const cadNav = document.getElementById('cad-views-nav');
     if (isGraphicProject) {
-        cadNav.classList.add('hidden');
+        cadNav.classList.add('hidden'); // Hides isometric/top tabs for Photoshop
     } else {
-        cadNav.classList.remove('hidden');
+        cadNav.classList.remove('hidden'); // Shows them for SolidWorks
     }
 
-    // Hide all project galleries, show only the active one
     document.querySelectorAll('.project-images').forEach(project => {
         project.style.display = 'none';
     });
     
     if (activeGalleryId) {
         document.getElementById(activeGalleryId).style.display = 'block';
-        
-        // Default to isometric for CAD, or show all for graphics
         if (!isGraphicProject) {
             filterGallery('isometric', null);
         } else {
@@ -98,20 +81,16 @@ function openGallery() {
     }
 }
 
-// --- FILTER CAD VIEWS INSIDE GALLERY ---
 function filterGallery(viewType, event) {
-    // Update active sub-link
     const subLinks = document.querySelectorAll('.sub-link');
     subLinks.forEach(link => link.classList.remove('active'));
     
     if (event) {
         event.currentTarget.classList.add('active');
     } else {
-        // Fallback active state for initialization
         if (subLinks.length > 0) subLinks[0].classList.add('active');
     }
 
-    // Only filter images INSIDE the currently active project
     if (activeGalleryId) {
         const items = document.querySelectorAll(`#${activeGalleryId} .gallery-item`);
         items.forEach(item => {
@@ -124,7 +103,6 @@ function filterGallery(viewType, event) {
     }
 }
 
-// --- RESET TO MAIN GRID ---
 function resetToHome() {
     document.getElementById('hero-cover').classList.remove('active');
     document.getElementById('internal-gallery').classList.remove('active');
