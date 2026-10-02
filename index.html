@@ -8,11 +8,9 @@
 </head>
 <body>
 
-    <!-- HEADER & NAVIGATION -->
     <header>
         <h1 class="logo" onclick="resetToHome()">EDISON.CREATE</h1>
         
-        <!-- LEVEL 1: MAIN CATEGORIES -->
         <nav class="top-nav">
             <button class="nav-link active" onclick="filterCategory('all', event)">All Work</button>
             <button class="nav-link" onclick="filterCategory('engineering', event)">Engineering</button>
@@ -20,7 +18,6 @@
             <a href="mailto:edisonochieng@example.com" class="nav-link contact-link">Contact</a>
         </nav>
 
-        <!-- LEVEL 2: ENGINEERING SOFTWARE -->
         <nav class="software-nav hidden" id="nav-engineering">
             <button class="software-link active" onclick="filterSoftware('engineering', 'all', event)">All Engineering</button>
             <button class="software-link" onclick="filterSoftware('engineering', 'solidworks', event)">SolidWorks</button>
@@ -29,7 +26,6 @@
             <button class="software-link" onclick="filterSoftware('engineering', 'revit', event)">Revit</button>
         </nav>
 
-        <!-- LEVEL 2: GRAPHICS SOFTWARE -->
         <nav class="software-nav hidden" id="nav-graphic">
             <button class="software-link active" onclick="filterSoftware('graphic', 'all', event)">All Graphics</button>
             <button class="software-link" onclick="filterSoftware('graphic', 'photoshop', event)">Photoshop</button>
@@ -39,24 +35,26 @@
     </header>
 
     <main>
-        <!-- STATE 1: MAIN ALBUM GRID -->
+        <!-- MAIN GRID -->
         <section id="album-grid" class="view-state active">
             
-            <!-- Engineering Project (SolidWorks) -->
-            <div class="album-card engineering solidworks" onclick="openHero('EV Battery Cooling Pack', 'SEPTEMBER 2026', 'assets/engineering/ev-cover.jpg', 'solidworks-project-1')">
-                <div class="album-img" style="background-image: url('assets/engineering/ev-cover.jpg');"></div>
-                <div class="album-title">EV Battery Cooling Pack</div>
+            <!-- YOUR PHOTOSHOP TEST (Uses your 2 repo images) -->
+            <!-- Notice the "true" at the end. This tells the code it is a Graphic project! -->
+            <div class="album-card graphic photoshop" onclick="openHero('My Photoshop Test', 'OCTOBER 2026', 'onevoice-01.png', 'photoshop-test-1', true)">
+                <div class="album-img" style="background-image: url('onevoice-01.png');"></div>
+                <div class="album-title">My Photoshop Test</div>
             </div>
 
-            <!-- Graphic Design Project (Photoshop) -->
-            <div class="album-card graphic photoshop" onclick="openHero('Neon Cyberpunk Edit', 'OCTOBER 2026', 'assets/graphics/neon-cover.jpg', 'photoshop-project-1')">
-                <div class="album-img" style="background-image: url('assets/graphics/neon-cover.jpg');"></div>
-                <div class="album-title">Neon Cyberpunk Edit</div>
+            <!-- A DUMMY SOLIDWORKS TEST -->
+            <!-- Notice the "false" at the end. This tells the code it is an Engineering project! -->
+            <div class="album-card engineering solidworks" onclick="openHero('Dummy SolidWorks', 'SEPT 2026', 'https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?q=80&w=1000', 'solidworks-test-1', false)">
+                <div class="album-img" style="background-image: url('https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?q=80&w=1000');"></div>
+                <div class="album-title">Dummy SolidWorks (Has CAD Tabs)</div>
             </div>
 
         </section>
 
-        <!-- STATE 2: HERO COVER ("Daisy" Overlay) -->
+        <!-- HERO COVER OVERLAY -->
         <section id="hero-cover" class="view-state hidden">
             <div class="hero-background" id="hero-bg">
                 <div class="hero-content">
@@ -67,10 +65,10 @@
             </div>
         </section>
 
-        <!-- STATE 3: INTERNAL GALLERY -->
+        <!-- INTERNAL GALLERY -->
         <section id="internal-gallery" class="view-state hidden">
             
-            <!-- CAD Viewing Tabs (You can hide this for graphic design projects via JS if needed) -->
+            <!-- CAD Tabs (These will automatically hide for Photoshop) -->
             <nav class="gallery-sub-nav" id="cad-views-nav">
                 <button class="sub-link active" onclick="filterGallery('isometric', event)">Isometric</button>
                 <button class="sub-link" onclick="filterGallery('front', event)">Front View</button>
@@ -78,31 +76,28 @@
                 <button class="sub-link" onclick="filterGallery('top', event)">Top Plan</button>
             </nav>
 
-            <!-- INDIVIDUAL PROJECT IMAGE CONTAINERS -->
-
-            <!-- SolidWorks Project Images -->
-            <div id="solidworks-project-1" class="project-images">
+            <!-- 1. YOUR PHOTOSHOP GALLERY -->
+            <div id="photoshop-test-1" class="project-images">
                 <div class="masonry-grid">
-                    <div class="gallery-item isometric" oncontextmenu="return false;">
-                        <img src="assets/engineering/iso1.jpg" alt="Isometric">
+                    <!-- Image 1 -->
+                    <div class="gallery-item all-views" oncontextmenu="return false;">
+                        <img src="onevoice-01.png" alt="Test Image 1">
                     </div>
-                    <div class="gallery-item front" oncontextmenu="return false;">
-                        <img src="assets/engineering/front1.jpg" alt="Front">
-                    </div>
-                    <div class="gallery-item top" oncontextmenu="return false;">
-                        <img src="assets/engineering/top1.jpg" alt="Top">
+                    <!-- Image 2 -->
+                    <div class="gallery-item all-views" oncontextmenu="return false;">
+                        <img src="Untitled-1-01.png" alt="Test Image 2">
                     </div>
                 </div>
             </div>
 
-            <!-- Photoshop Project Images (No isometric/front views, just a standard grid) -->
-            <div id="photoshop-project-1" class="project-images">
+            <!-- 2. DUMMY SOLIDWORKS GALLERY -->
+            <div id="solidworks-test-1" class="project-images">
                 <div class="masonry-grid">
-                    <div class="gallery-item all-views" oncontextmenu="return false;">
-                        <img src="assets/graphics/neon-final.jpg" alt="Final Edit">
+                    <div class="gallery-item isometric" oncontextmenu="return false;">
+                        <img src="https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?q=80&w=1000" alt="Iso">
                     </div>
-                    <div class="gallery-item all-views" oncontextmenu="return false;">
-                        <img src="assets/graphics/neon-before.jpg" alt="Before">
+                    <div class="gallery-item front" oncontextmenu="return false;">
+                        <img src="https://images.unsplash.com/photo-1621252179022-8145f577f8ec?q=80&w=1000" alt="Front">
                     </div>
                 </div>
             </div>
