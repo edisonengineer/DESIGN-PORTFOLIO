@@ -16,16 +16,13 @@ body {
     transition: background-color 0.8s ease; 
 }
 
-/* Colorful Header */
+/* Header */
 header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: flex; flex-direction: column; align-items: center;
     padding: 40px 20px 20px 20px;
     background: linear-gradient(135deg, #1e2233 0%, #3a2024 100%);
     border-bottom: 2px solid rgba(255,255,255,0.1);
 }
-
 .logo { font-family: var(--font-serif); font-size: 1.8rem; letter-spacing: 3px; margin: 0 0 30px 0; cursor: pointer; }
 
 /* Navigation */
@@ -42,7 +39,6 @@ header {
 .view-state { display: none; }
 .view-state.active { display: block; animation: fadeIn 0.8s ease; }
 .hidden { display: none !important; }
-
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
 /* Main Grid */
@@ -66,50 +62,61 @@ header {
 .gallery-sub-nav { display: flex; justify-content: center; gap: 40px; margin-bottom: 50px; }
 .sub-link { background: none; border: none; color: rgba(255,255,255,0.6); font-family: var(--font-serif); font-size: 1.1rem; font-style: italic; cursor: pointer; transition: color 0.3s; }
 .sub-link:hover, .sub-link.active { color: var(--text-main); }
-
 .project-images { display: none; }
 .masonry-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-.gallery-item { cursor: zoom-in; } /* Lets users know they can click */
+.gallery-item { cursor: zoom-in; } 
 .gallery-item img { width: 100%; height: auto; display: block; pointer-events: none; user-select: none; }
 
-/* --- NEW: Fullscreen Lightbox Styles --- */
+/* --- NEW: Fullscreen Lightbox Styles (Pixieset Aesthetic) --- */
 .lightbox {
     position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-    background: rgba(15, 15, 15, 0.98);
+    background: #181818; /* Deep solid color like the screenshot */
     z-index: 2000;
     display: flex; align-items: center; justify-content: center;
     visibility: hidden; opacity: 0;
-    transition: opacity 0.4s ease, visibility 0.4s ease;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 .lightbox.active { visibility: visible; opacity: 1; }
 
-.lightbox-content img {
-    max-width: 90vw; max-height: 85vh;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-    pointer-events: none; user-select: none; /* Anti-download */
+/* Top bar holding the back arrow */
+.lightbox-top-bar {
+    position: absolute; top: 0; left: 0; width: 100%;
+    padding: 25px; box-sizing: border-box;
+    z-index: 2002; display: flex; justify-content: flex-start;
 }
 
-/* Lightbox Navigation & Close Buttons */
+/* Back Arrow (Top Left) */
 .lightbox-close {
-    position: absolute; top: 40px; left: 40px;
     background: transparent; border: none;
-    color: rgba(255,255,255,0.7); font-size: 0.9rem;
-    letter-spacing: 2px; text-transform: uppercase;
-    cursor: pointer; z-index: 2001; transition: color 0.3s;
+    color: #a0a0a0; padding: 10px; cursor: pointer;
+    transition: color 0.3s; display: flex; align-items: center;
 }
 .lightbox-close:hover { color: #fff; }
 
+/* Center Image Container */
+.lightbox-content {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    padding: 80px; box-sizing: border-box;
+}
+.lightbox-content img {
+    max-width: 100%; max-height: 100%;
+    object-fit: contain; /* Ensures the image fits the screen beautifully */
+    pointer-events: none; user-select: none; /* Anti-download */
+}
+
+/* Side Navigation Arrows */
 .lightbox-nav {
     position: absolute; top: 50%; transform: translateY(-50%);
     background: transparent; border: none;
-    color: rgba(255,255,255,0.5); font-size: 3rem;
-    cursor: pointer; padding: 20px; z-index: 2001; transition: color 0.3s;
+    color: rgba(255,255,255,0.3); padding: 20px;
+    cursor: pointer; z-index: 2001; transition: color 0.3s;
 }
 .lightbox-nav:hover { color: #fff; }
 .lightbox-nav.prev { left: 20px; }
 .lightbox-nav.next { right: 20px; }
 
-/* Colorful Footer */
+/* Footer */
 .site-footer { background: linear-gradient(135deg, #3a2024 0%, #1e2233 100%); border-top: 2px solid rgba(255,255,255,0.1); padding: 60px 20px; text-align: center; margin-top: 60px; }
 .footer-content h3 { font-family: var(--font-serif); font-size: 1.5rem; letter-spacing: 3px; margin: 0 0 10px 0; }
 .footer-content p { color: rgba(255,255,255,0.7); font-size: 0.9rem; margin-bottom: 20px; }
