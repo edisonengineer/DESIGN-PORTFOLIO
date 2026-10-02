@@ -1,208 +1,151 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edison Ochieng | Design Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+let activeGalleryId = '';
+let isGraphicProject = false;
+let lightboxImages = [];
+let currentLightboxIndex = 0;
 
-    <!-- HEADER & NAVIGATION -->
-    <header>
-        <h1 class="logo" onclick="resetToHome()">EDISON.CREATE</h1>
-        
-        <nav class="top-nav">
-            <button class="nav-link active" onclick="filterCategory('all', event)">All Work</button>
-            <button class="nav-link" onclick="filterCategory('engineering', event)">Engineering</button>
-            <button class="nav-link" onclick="filterCategory('graphic', event)">Graphic Design</button>
-            <button class="nav-link" onclick="showPdfWorks(event)">PDF Works</button>
-            <a href="mailto:edisonochieng@example.com" class="nav-link contact-link">Contact</a>
-        </nav>
+// Assigned directly to the window so the PDF viewer can correctly wrap and clean it up!
+window.resetToHome = function() {
+    document.getElementById('hero-cover').classList.remove('active');
+    document.getElementById('internal-gallery').classList.remove('active');
+    
+    // Safety fallback: strictly ensure the PDF Works section is hidden
+    const pdfWorks = document.getElementById('pdf-works');
+    if (pdfWorks) pdfWorks.classList.remove('active');
+    
+    document.getElementById('album-grid').classList.add('active');
+    document.body.style.backgroundColor = '#1a1a1a';
+};
 
-        <nav class="software-nav hidden" id="nav-engineering">
-            <button class="software-link active" onclick="filterSoftware('engineering', 'all', event)">All Engineering</button>
-            <button class="software-link" onclick="filterSoftware('engineering', 'solidworks', event)">SolidWorks</button>
-            <button class="software-link" onclick="filterSoftware('engineering', 'inventor', event)">Inventor</button>
-            <button class="software-link" onclick="filterSoftware('engineering', 'autocad', event)">AutoCAD</button>
-            <button class="software-link" onclick="filterSoftware('engineering', 'revit', event)">Revit</button>
-        </nav>
+function filterCategory(category, event) {
+    // Calling the globally wrapped version ensures the PDF viewer closes properly
+    window.resetToHome(); 
+    
+    document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+    if (event) event.currentTarget.classList.add('active');
 
-        <nav class="software-nav hidden" id="nav-graphic">
-            <button class="software-link active" onclick="filterSoftware('graphic', 'all', event)">All Graphics</button>
-            <button class="software-link" onclick="filterSoftware('graphic', 'photoshop', event)">Photoshop</button>
-            <button class="software-link" onclick="filterSoftware('graphic', 'illustrator', event)">Illustrator</button>
-            <button class="software-link" onclick="filterSoftware('graphic', 'indesign', event)">InDesign</button>
-        </nav>
-    </header>
+    document.querySelectorAll('.software-nav').forEach(nav => nav.classList.add('hidden'));
+    document.querySelectorAll('.software-link').forEach(link => link.classList.remove('active'));
+    
+    if (category === 'engineering') {
+        document.getElementById('nav-engineering').classList.remove('hidden');
+        document.querySelector('#nav-engineering .software-link').classList.add('active');
+    } else if (category === 'graphic') {
+        document.getElementById('nav-graphic').classList.remove('hidden');
+        document.querySelector('#nav-graphic .software-link').classList.add('active');
+    }
 
-    <main>
-        <!-- MAIN ALBUM GRID -->
-        <section id="album-grid" class="view-state active">
-            
-            <div class="album-card graphic illustrator" onclick="openHero('Camp Meeting Appreciation', 'OCTOBER 2026', 'APPRECIATION-02.png', 'camp-meeting-gallery', true, '#3a2024')">
-                <div class="album-img" style="background-image: url('APPRECIATION-02.png');"></div>
-                <div class="album-title">Camp Meeting Appreciation</div>
-            </div>
+    const albums = document.querySelectorAll('.album-card');
+    albums.forEach(album => {
+        if (category === 'all' || album.classList.contains(category)) {
+            album.style.display = 'block';
+        } else {
+            album.style.display = 'none';
+        }
+    });
+}
 
-            <div class="album-card engineering solidworks" onclick="openHero('Dummy CAD Project', 'SEPT 2026', 'https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?q=80&w=1000', 'dummy-cad-gallery', false, '#1b2a33')">
-                <div class="album-img" style="background-image: url('https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?q=80&w=1000');"></div>
-                <div class="album-title">Dummy CAD Project</div>
-            </div>
+function filterSoftware(category, software, event) {
+    const currentNav = document.getElementById(`nav-${category}`);
+    currentNav.querySelectorAll('.software-link').forEach(link => link.classList.remove('active'));
+    if (event) event.currentTarget.classList.add('active');
 
-        </section>
+    const albums = document.querySelectorAll('.album-card');
+    albums.forEach(album => {
+        if (software === 'all') {
+            album.style.display = album.classList.contains(category) ? 'block' : 'none';
+        } else {
+            album.style.display = album.classList.contains(software) ? 'block' : 'none';
+        }
+    });
+}
 
-        <!-- HERO COVER OVERLAY -->
-        <section id="hero-cover" class="view-state">
-            <div class="hero-background" id="hero-bg">
-                <div class="hero-content">
-                    <h2 id="hero-title">Project Title</h2>
-                    <p id="hero-date">DATE / SUBTITLE</p>
-                    <button class="view-gallery-btn" onclick="openGallery()">VIEW GALLERY</button>
-                </div>
-            </div>
-        </section>
+function openHero(title, date, bgImageUrl, galleryId, isGraphic, themeColor) {
+    window.resetToHome(); // Safely reset everything first
+    
+    document.getElementById('album-grid').classList.remove('active');
+    document.getElementById('hero-cover').classList.add('active');
+    
+    document.getElementById('hero-title').innerText = title;
+    document.getElementById('hero-date').innerText = date;
+    document.getElementById('hero-bg').style.backgroundImage = `url('${bgImageUrl}')`;
+    
+    activeGalleryId = galleryId;
+    isGraphicProject = isGraphic;
+    document.body.style.backgroundColor = themeColor || '#1a1a1a';
+}
 
-        <!-- INTERNAL GALLERY -->
-        <section id="internal-gallery" class="view-state">
-            
-            <nav class="gallery-sub-nav" id="cad-views-nav">
-                <button class="sub-link active" onclick="filterGallery('isometric', event)">Isometric</button>
-                <button class="sub-link" onclick="filterGallery('front', event)">Front View</button>
-                <button class="sub-link" onclick="filterGallery('side', event)">Side View</button>
-                <button class="sub-link" onclick="filterGallery('top', event)">Top Plan</button>
-            </nav>
+function openGallery() {
+    document.getElementById('hero-cover').classList.remove('active');
+    document.getElementById('internal-gallery').classList.add('active');
+    
+    const cadNav = document.getElementById('cad-views-nav');
+    if (isGraphicProject) {
+        cadNav.classList.add('hidden');
+    } else {
+        cadNav.classList.remove('hidden');
+    }
 
-            <div id="camp-meeting-gallery" class="project-images">
-                <div class="masonry-grid">
-                    <div class="gallery-item all-views" oncontextmenu="return false;" onclick="openLightbox(this)">
-                        <img loading="lazy" decoding="async" src="APPRECIATION-02.png" alt="Appreciation 2">
-                    </div>
-                    <div class="gallery-item all-views" oncontextmenu="return false;" onclick="openLightbox(this)">
-                        <img loading="lazy" decoding="async" src="APPRECIATION-03.png" alt="Appreciation 3">
-                    </div>
-                    <div class="gallery-item all-views" oncontextmenu="return false;" onclick="openLightbox(this)">
-                        <img loading="lazy" decoding="async" src="APPRECIATION-04.png" alt="Appreciation 4">
-                    </div>
-                    <div class="gallery-item all-views" oncontextmenu="return false;" onclick="openLightbox(this)">
-                        <img loading="lazy" decoding="async" src="APPRECIATION-06.png" alt="Appreciation 6">
-                    </div>
-                    <div class="gallery-item all-views" oncontextmenu="return false;" onclick="openLightbox(this)">
-                        <img loading="lazy" decoding="async" src="APPRECIATION-06-06.png" alt="Appreciation 6-06">
-                    </div>
-                    <div class="gallery-item all-views" oncontextmenu="return false;" onclick="openLightbox(this)">
-                        <img loading="lazy" decoding="async" src="onevoice-01.png" alt="One Voice">
-                    </div>
-                    <div class="gallery-item all-views" oncontextmenu="return false;" onclick="openLightbox(this)">
-                        <img loading="lazy" decoding="async" src="Untitled-1-01.png" alt="Untitled">
-                    </div>
-                </div>
-            </div>
+    document.querySelectorAll('.project-images').forEach(project => {
+        project.style.display = 'none';
+    });
+    
+    if (activeGalleryId) {
+        document.getElementById(activeGalleryId).style.display = 'block';
+        if (!isGraphicProject) {
+            filterGallery('isometric', null);
+        } else {
+            filterGallery('all-views', null);
+        }
+    }
+}
 
-            <div id="dummy-cad-gallery" class="project-images">
-                <div class="masonry-grid">
-                    <div class="gallery-item isometric" oncontextmenu="return false;" onclick="openLightbox(this)">
-                        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?q=80&w=1000" alt="Iso">
-                    </div>
-                    <div class="gallery-item front" oncontextmenu="return false;" onclick="openLightbox(this)">
-                        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1621252179022-8145f577f8ec?q=80&w=1000" alt="Front">
-                    </div>
-                </div>
-            </div>
-        </section>
+function filterGallery(viewType, event) {
+    const subLinks = document.querySelectorAll('.sub-link');
+    subLinks.forEach(link => link.classList.remove('active'));
+    
+    if (event) {
+        event.currentTarget.classList.add('active');
+    } else {
+        if (subLinks.length > 0) subLinks[0].classList.add('active');
+    }
 
-        <!-- PDF WORKS -->
-        <section id="pdf-works" class="view-state">
-            <div class="pdf-works-head">
-                <h2>PDF Works</h2>
-                <p>Select a document to read it like a book</p>
-            </div>
-            <div id="pdf-grid"></div>
-        </section>
+    if (activeGalleryId) {
+        const items = document.querySelectorAll(`#${activeGalleryId} .gallery-item`);
+        items.forEach(item => {
+            if (viewType === 'all-views' || item.classList.contains(viewType)) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
+}
 
-        <!-- STATE 4: FULLSCREEN LIGHTBOX (Pixieset Style) -->
-        <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-            
-            <!-- Top bar for the Back Arrow -->
-            <div class="lightbox-top-bar">
-                <button class="lightbox-close" onclick="closeLightbox()" title="Back to Gallery">
-                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="19" y1="12" x2="5" y2="12"></line>
-                        <polyline points="12 19 5 12 12 5"></polyline>
-                    </svg>
-                </button>
-            </div>
-            
-            <!-- Previous Arrow -->
-            <button class="lightbox-nav prev" onclick="changeImage(-1, event)">
-                <svg viewBox="0 0 24 24" width="36" height="36" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="15 18 9 12 15 6"></polyline>
-                </svg>
-            </button>
-            
-            <!-- Centered Image Container -->
-            <div class="lightbox-content" onclick="event.stopPropagation()">
-                <img id="lightbox-img" decoding="async" src="" alt="Fullscreen Image" oncontextmenu="return false;">
-            </div>
-            
-            <!-- Next Arrow -->
-            <button class="lightbox-nav next" onclick="changeImage(1, event)">
-                <svg viewBox="0 0 24 24" width="36" height="36" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-            </button>
-        </div>
+function openLightbox(clickedElement) {
+    const gallery = document.getElementById(activeGalleryId);
+    
+    const visibleItems = Array.from(gallery.querySelectorAll('.gallery-item')).filter(item => item.style.display === 'block');
+    lightboxImages = visibleItems.map(item => item.querySelector('img').src);
+    
+    currentLightboxIndex = visibleItems.indexOf(clickedElement);
+    
+    document.getElementById('lightbox-img').src = lightboxImages[currentLightboxIndex];
+    document.getElementById('lightbox').classList.add('active');
+}
 
-    </main>
+function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+}
 
-    <!-- PDF FLIPBOOK VIEWER -->
-    <div id="pdf-viewer" class="pdf-viewer" role="dialog" aria-modal="true" aria-label="PDF viewer" aria-hidden="true">
-        <div class="pdf-toolbar">
-            <button class="pdf-btn" id="pdf-close" title="Back" aria-label="Close viewer">
-                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-            </button>
-            <div class="pdf-title" id="pdf-title"></div>
-            <button class="pdf-btn" id="pdf-download" title="Download PDF" aria-label="Download PDF">
-                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><polyline points="7 11 12 16 17 11"></polyline><path d="M4 20h16"></path></svg>
-            </button>
-            <button class="pdf-btn" id="pdf-fullscreen" title="Fullscreen" aria-label="Toggle fullscreen">
-                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 9 4 4 9 4"></polyline><polyline points="15 4 20 4 20 9"></polyline><polyline points="20 15 20 20 15 20"></polyline><polyline points="9 20 4 20 4 15"></polyline></svg>
-            </button>
-        </div>
-
-        <div class="pdf-stage" id="pdf-stage"></div>
-
-        <button class="pdf-nav prev" id="pdf-prev" aria-label="Previous page">
-            <svg viewBox="0 0 24 24" width="36" height="36" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-        </button>
-        <button class="pdf-nav next" id="pdf-next" aria-label="Next page">
-            <svg viewBox="0 0 24 24" width="36" height="36" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        </button>
-
-        <div class="pdf-bottom">
-            <span class="pdf-counter" id="pdf-counter">1 / 1</span>
-            <input type="range" id="pdf-slider" min="1" max="1" value="1" aria-label="Page">
-        </div>
-
-        <div class="pdf-loading" id="pdf-loading"><div class="pdf-spinner"></div><span id="pdf-loading-text">Loading...</span></div>
-    </div>
-
-    <!-- FOOTER -->
-    <footer class="site-footer">
-        <div class="footer-content">
-            <h3>EDISON.CREATE</h3>
-            <p>Mechanical Engineer & Graphic Designer based in Nairobi.</p>
-            <div class="footer-links">
-                <a href="mailto:edisonochieng@example.com">Email Me</a>
-                <a href="https://github.com/edisonochieng" target="_blank">GitHub</a>
-            </div>
-            <p class="copyright">© 2026 Edison Ochieng. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
-    <script defer src="pdf-viewer.js"></script>
-</body>
-</html>
+function changeImage(direction, event) {
+    event.stopPropagation();
+    currentLightboxIndex += direction;
+    
+    if (currentLightboxIndex < 0) {
+        currentLightboxIndex = lightboxImages.length - 1;
+    } else if (currentLightboxIndex >= lightboxImages.length) {
+        currentLightboxIndex = 0;
+    }
+    
+    document.getElementById('lightbox-img').src = lightboxImages[currentLightboxIndex];
+}
