@@ -1,19 +1,16 @@
 let activeGalleryId = '';
 let isGraphicProject = false;
+let lightboxImages = [];
+let currentLightboxIndex = 0;
 
-// --- LEVEL 1: FILTER MAIN CATEGORIES ---
 function filterCategory(category, event) {
     resetToHome(); 
-    
-    // Update active nav links
     document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
     if (event) event.currentTarget.classList.add('active');
 
-    // Hide sub-navs
     document.querySelectorAll('.software-nav').forEach(nav => nav.classList.add('hidden'));
     document.querySelectorAll('.software-link').forEach(link => link.classList.remove('active'));
     
-    // Show specific sub-nav
     if (category === 'engineering') {
         document.getElementById('nav-engineering').classList.remove('hidden');
         document.querySelector('#nav-engineering .software-link').classList.add('active');
@@ -22,7 +19,6 @@ function filterCategory(category, event) {
         document.querySelector('#nav-graphic .software-link').classList.add('active');
     }
 
-    // Filter main grid
     const albums = document.querySelectorAll('.album-card');
     albums.forEach(album => {
         if (category === 'all' || album.classList.contains(category)) {
@@ -33,14 +29,11 @@ function filterCategory(category, event) {
     });
 }
 
-// --- LEVEL 2: FILTER SPECIFIC SOFTWARE ---
 function filterSoftware(category, software, event) {
-    // Update active software link
     const currentNav = document.getElementById(`nav-${category}`);
     currentNav.querySelectorAll('.software-link').forEach(link => link.classList.remove('active'));
     if (event) event.currentTarget.classList.add('active');
 
-    // Filter grid items
     const albums = document.querySelectorAll('.album-card');
     albums.forEach(album => {
         if (software === 'all') {
@@ -51,7 +44,6 @@ function filterSoftware(category, software, event) {
     });
 }
 
-// --- HERO COVER TRANSITION & DYNAMIC BACKGROUND ---
 function openHero(title, date, bgImageUrl, galleryId, isGraphic, themeColor) {
     document.getElementById('album-grid').classList.remove('active');
     document.getElementById('internal-gallery').classList.remove('active');
@@ -63,17 +55,13 @@ function openHero(title, date, bgImageUrl, galleryId, isGraphic, themeColor) {
     
     activeGalleryId = galleryId;
     isGraphicProject = isGraphic;
-
-    // Apply the custom theme color (or default back to dark charcoal if none is provided)
     document.body.style.backgroundColor = themeColor || '#1a1a1a';
 }
 
-// --- OPEN INTERNAL GALLERY ---
 function openGallery() {
     document.getElementById('hero-cover').classList.remove('active');
     document.getElementById('internal-gallery').classList.add('active');
     
-    // Toggle CAD tabs based on project type
     const cadNav = document.getElementById('cad-views-nav');
     if (isGraphicProject) {
         cadNav.classList.add('hidden');
@@ -81,16 +69,12 @@ function openGallery() {
         cadNav.classList.remove('hidden');
     }
 
-    // Hide all project images
     document.querySelectorAll('.project-images').forEach(project => {
         project.style.display = 'none';
     });
     
-    // Show only the clicked project's images
     if (activeGalleryId) {
         document.getElementById(activeGalleryId).style.display = 'block';
-        
-        // Auto-select correct view
         if (!isGraphicProject) {
             filterGallery('isometric', null);
         } else {
@@ -99,7 +83,6 @@ function openGallery() {
     }
 }
 
-// --- FILTER INTERNAL CAD VIEWS ---
 function filterGallery(viewType, event) {
     const subLinks = document.querySelectorAll('.sub-link');
     subLinks.forEach(link => link.classList.remove('active'));
@@ -122,12 +105,48 @@ function filterGallery(viewType, event) {
     }
 }
 
-// --- RESET TO MAIN GRID ---
 function resetToHome() {
     document.getElementById('hero-cover').classList.remove('active');
     document.getElementById('internal-gallery').classList.remove('active');
     document.getElementById('album-grid').classList.add('active');
-    
-    // Reset background color to the default theme
     document.body.style.backgroundColor = '#1a1a1a';
+}
+
+// --- FULLSCREEN LIGHTBOX FUNCTIONS ---
+
+function openLightbox(clickedElement) {
+    const gallery = document.getElementById(activeGalleryId);
+    
+    // Find all images currently visible on the screen based on the active tab (Front, Top, etc.)
+    const visibleItems = Array.from(gallery.querySelectorAll('.gallery-item')).filter(item => item.style.display === 'block');
+    
+    // Map their source URLs into our array
+    lightboxImages = visibleItems.map(item => item.querySelector('img').src);
+    
+    // Find exactly which image was clicked
+    currentLightboxIndex = visibleItems.indexOf(clickedElement);
+    
+    // Display the image and fade in the lightbox
+    document.getElementById('lightbox-img').src = lightboxImages[currentLightboxIndex];
+    document.getElementById('lightbox').classList.add('active');
+}
+
+function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+}
+
+function changeImage(direction, event) {
+    // Prevent clicking the arrow from accidentally closing the gallery
+    event.stopPropagation();
+    
+    currentLightboxIndex += direction;
+    
+    // Loop back to the start or end if they click past the limits
+    if (currentLightboxIndex < 0) {
+        currentLightboxIndex = lightboxImages.length - 1;
+    } else if (currentLightboxIndex >= lightboxImages.length) {
+        currentLightboxIndex = 0;
+    }
+    
+    document.getElementById('lightbox-img').src = lightboxImages[currentLightboxIndex];
 }
