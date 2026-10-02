@@ -8,40 +8,57 @@
 </head>
 <body>
 
-    <!-- PIXIESET STYLE HEADER & NAV -->
+    <!-- HEADER & NAVIGATION -->
     <header>
         <h1 class="logo" onclick="resetToHome()">EDISON.CREATE</h1>
+        
+        <!-- LEVEL 1: MAIN CATEGORIES -->
         <nav class="top-nav">
-            <button class="nav-link active" onclick="filterMain('all')">All Work</button>
-            <button class="nav-link" onclick="filterMain('solidworks')">SolidWorks</button>
-            <button class="nav-link" onclick="filterMain('inventor')">Inventor</button>
-            <button class="nav-link" onclick="filterMain('graphic')">Graphic Design</button>
+            <button class="nav-link active" onclick="filterCategory('all', event)">All Work</button>
+            <button class="nav-link" onclick="filterCategory('engineering', event)">Engineering</button>
+            <button class="nav-link" onclick="filterCategory('graphic', event)">Graphic Design</button>
             <a href="mailto:edisonochieng@example.com" class="nav-link contact-link">Contact</a>
+        </nav>
+
+        <!-- LEVEL 2: ENGINEERING SOFTWARE -->
+        <nav class="software-nav hidden" id="nav-engineering">
+            <button class="software-link active" onclick="filterSoftware('engineering', 'all', event)">All Engineering</button>
+            <button class="software-link" onclick="filterSoftware('engineering', 'solidworks', event)">SolidWorks</button>
+            <button class="software-link" onclick="filterSoftware('engineering', 'inventor', event)">Inventor</button>
+            <button class="software-link" onclick="filterSoftware('engineering', 'autocad', event)">AutoCAD</button>
+            <button class="software-link" onclick="filterSoftware('engineering', 'revit', event)">Revit</button>
+        </nav>
+
+        <!-- LEVEL 2: GRAPHICS SOFTWARE -->
+        <nav class="software-nav hidden" id="nav-graphic">
+            <button class="software-link active" onclick="filterSoftware('graphic', 'all', event)">All Graphics</button>
+            <button class="software-link" onclick="filterSoftware('graphic', 'photoshop', event)">Photoshop</button>
+            <button class="software-link" onclick="filterSoftware('graphic', 'illustrator', event)">Illustrator</button>
+            <button class="software-link" onclick="filterSoftware('graphic', 'indesign', event)">InDesign</button>
         </nav>
     </header>
 
     <main>
-        <!-- STATE 1: THE MAIN ALBUM GRID (Thumbnails) -->
+        <!-- STATE 1: MAIN ALBUM GRID -->
         <section id="album-grid" class="view-state active">
             
-            <!-- SolidWorks Album Thumbnail -->
-            <div class="album-card solidworks" onclick="openHero('EV Battery Cooling Pack', '17TH SEPTEMBER, 2026', 'assets/engineering/ev-cover.jpg')">
+            <!-- Engineering Project (SolidWorks) -->
+            <div class="album-card engineering solidworks" onclick="openHero('EV Battery Cooling Pack', 'SEPTEMBER 2026', 'assets/engineering/ev-cover.jpg', 'solidworks-project-1')">
                 <div class="album-img" style="background-image: url('assets/engineering/ev-cover.jpg');"></div>
                 <div class="album-title">EV Battery Cooling Pack</div>
             </div>
 
-            <!-- Inventor Album Thumbnail -->
-            <div class="album-card inventor" onclick="openHero('Poultry De-feathering Machine', 'AUGUST, 2026', 'assets/engineering/poultry-cover.jpg')">
-                <div class="album-img" style="background-image: url('assets/engineering/poultry-cover.jpg');"></div>
-                <div class="album-title">Poultry De-feathering Machine</div>
+            <!-- Graphic Design Project (Photoshop) -->
+            <div class="album-card graphic photoshop" onclick="openHero('Neon Cyberpunk Edit', 'OCTOBER 2026', 'assets/graphics/neon-cover.jpg', 'photoshop-project-1')">
+                <div class="album-img" style="background-image: url('assets/graphics/neon-cover.jpg');"></div>
+                <div class="album-title">Neon Cyberpunk Edit</div>
             </div>
 
         </section>
 
-        <!-- STATE 2: THE HERO COVER (Like the "Daisy" screen) -->
+        <!-- STATE 2: HERO COVER ("Daisy" Overlay) -->
         <section id="hero-cover" class="view-state hidden">
             <div class="hero-background" id="hero-bg">
-                <!-- Overlay content -->
                 <div class="hero-content">
                     <h2 id="hero-title">Project Title</h2>
                     <p id="hero-date">DATE / SUBTITLE</p>
@@ -50,30 +67,43 @@
             </div>
         </section>
 
-        <!-- STATE 3: THE INTERNAL GALLERY (After clicking View Gallery) -->
+        <!-- STATE 3: INTERNAL GALLERY -->
         <section id="internal-gallery" class="view-state hidden">
             
-            <!-- Sub-tabs for CAD views (Like Regal, Noir, Bronze) -->
-            <nav class="gallery-sub-nav">
-                <button class="sub-link active" onclick="filterGallery('isometric')">Isometric</button>
-                <button class="sub-link" onclick="filterGallery('front')">Front View</button>
-                <button class="sub-link" onclick="filterGallery('side')">Side View</button>
-                <button class="sub-link" onclick="filterGallery('top')">Top Plan</button>
+            <!-- CAD Viewing Tabs (You can hide this for graphic design projects via JS if needed) -->
+            <nav class="gallery-sub-nav" id="cad-views-nav">
+                <button class="sub-link active" onclick="filterGallery('isometric', event)">Isometric</button>
+                <button class="sub-link" onclick="filterGallery('front', event)">Front View</button>
+                <button class="sub-link" onclick="filterGallery('side', event)">Side View</button>
+                <button class="sub-link" onclick="filterGallery('top', event)">Top Plan</button>
             </nav>
 
-            <!-- The Images -->
-            <div class="masonry-grid">
-                <!-- Isometric Images -->
-                <div class="gallery-item isometric oncontextmenu="return false;">
-                    <img src="assets/engineering/iso1.jpg" alt="Isometric View">
+            <!-- INDIVIDUAL PROJECT IMAGE CONTAINERS -->
+
+            <!-- SolidWorks Project Images -->
+            <div id="solidworks-project-1" class="project-images">
+                <div class="masonry-grid">
+                    <div class="gallery-item isometric" oncontextmenu="return false;">
+                        <img src="assets/engineering/iso1.jpg" alt="Isometric">
+                    </div>
+                    <div class="gallery-item front" oncontextmenu="return false;">
+                        <img src="assets/engineering/front1.jpg" alt="Front">
+                    </div>
+                    <div class="gallery-item top" oncontextmenu="return false;">
+                        <img src="assets/engineering/top1.jpg" alt="Top">
+                    </div>
                 </div>
-                <!-- Front Images -->
-                <div class="gallery-item front" oncontextmenu="return false;">
-                    <img src="assets/engineering/front1.jpg" alt="Front View">
-                </div>
-                <!-- Side Images -->
-                <div class="gallery-item side" oncontextmenu="return false;">
-                    <img src="assets/engineering/side1.jpg" alt="Side View">
+            </div>
+
+            <!-- Photoshop Project Images (No isometric/front views, just a standard grid) -->
+            <div id="photoshop-project-1" class="project-images">
+                <div class="masonry-grid">
+                    <div class="gallery-item all-views" oncontextmenu="return false;">
+                        <img src="assets/graphics/neon-final.jpg" alt="Final Edit">
+                    </div>
+                    <div class="gallery-item all-views" oncontextmenu="return false;">
+                        <img src="assets/graphics/neon-before.jpg" alt="Before">
+                    </div>
                 </div>
             </div>
 
