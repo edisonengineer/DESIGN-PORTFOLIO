@@ -5,13 +5,15 @@
 (function () {
     'use strict';
 
-    /* ---------- EDIT THIS LIST TO ADD YOUR PDFs ----------
+   /* ---------- EDIT THIS LIST TO ADD YOUR PDFs ----------
        file:  path to the PDF inside your repo (case-sensitive, no spaces)
        cover: optional image for the card; if omitted, page 1 is used     */
     const PDF_WORKS = [
-       { title: 'Simba Corp Graduate Engineer Trainee: Interview & Written Prep Guide', subtitle: 'Prep Guide', file: 'pdfs/simba-corp-prep-guide.pdf' },
-        // { title: 'School Magazine, Oct-Nov 2026', subtitle: 'Layout & Design', file: 'pdfs/school-magazine.pdf' },
-        // { title: 'Company Profile', subtitle: 'Brochure', file: 'pdfs/company-profile.pdf', cover: 'pdfs/company-cover.jpg' },
+        { 
+            title: 'Simba Corp Prep Guide', 
+            subtitle: 'Preparation Document', 
+            file: 'simba-corp-prep-guide.pdf' 
+        }
     ];
 
     const $ = (id) => document.getElementById(id);
