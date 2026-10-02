@@ -8,6 +8,7 @@
 </head>
 <body>
 
+    <!-- HEADER & NAVIGATION -->
     <header>
         <h1 class="logo" onclick="resetToHome()">EDISON.CREATE</h1>
         
@@ -35,7 +36,7 @@
     </header>
 
     <main>
-        <!-- STATE 1: MAIN ALBUM GRID -->
+        <!-- MAIN ALBUM GRID -->
         <section id="album-grid" class="view-state active">
             
             <div class="album-card graphic illustrator" onclick="openHero('Camp Meeting Appreciation', 'OCTOBER 2026', 'APPRECIATION-02.png', 'camp-meeting-gallery', true, '#3a2024')">
@@ -50,7 +51,7 @@
 
         </section>
 
-        <!-- STATE 2: HERO COVER OVERLAY -->
+        <!-- HERO COVER OVERLAY -->
         <section id="hero-cover" class="view-state">
             <div class="hero-background" id="hero-bg">
                 <div class="hero-content">
@@ -61,7 +62,7 @@
             </div>
         </section>
 
-        <!-- STATE 3: INTERNAL GALLERY -->
+        <!-- INTERNAL GALLERY -->
         <section id="internal-gallery" class="view-state">
             
             <nav class="gallery-sub-nav" id="cad-views-nav">
@@ -71,10 +72,8 @@
                 <button class="sub-link" onclick="filterGallery('top', event)">Top Plan</button>
             </nav>
 
-            <!-- 1. CAMP MEETING APPRECIATION IMAGES -->
             <div id="camp-meeting-gallery" class="project-images">
                 <div class="masonry-grid">
-                    <!-- Added onclick="openLightbox(this)" to every item -->
                     <div class="gallery-item all-views" oncontextmenu="return false;" onclick="openLightbox(this)">
                         <img src="APPRECIATION-02.png" alt="Appreciation 2">
                     </div>
@@ -99,7 +98,6 @@
                 </div>
             </div>
 
-            <!-- 2. DUMMY CAD IMAGES -->
             <div id="dummy-cad-gallery" class="project-images">
                 <div class="masonry-grid">
                     <div class="gallery-item isometric" oncontextmenu="return false;" onclick="openLightbox(this)">
@@ -112,19 +110,42 @@
             </div>
         </section>
 
-        <!-- STATE 4: FULLSCREEN LIGHTBOX -->
+        <!-- STATE 4: FULLSCREEN LIGHTBOX (Pixieset Style) -->
         <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-            <button class="lightbox-close" onclick="closeLightbox()">← Back to Gallery</button>
-            <button class="lightbox-nav prev" onclick="changeImage(-1, event)">&#10094;</button>
-            <!-- Image wrap prevents clicking the image from closing the gallery -->
+            
+            <!-- Top bar for the Back Arrow -->
+            <div class="lightbox-top-bar">
+                <button class="lightbox-close" onclick="closeLightbox()" title="Back to Gallery">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Previous Arrow -->
+            <button class="lightbox-nav prev" onclick="changeImage(-1, event)">
+                <svg viewBox="0 0 24 24" width="36" height="36" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+            
+            <!-- Centered Image Container -->
             <div class="lightbox-content" onclick="event.stopPropagation()">
                 <img id="lightbox-img" src="" alt="Fullscreen Image" oncontextmenu="return false;">
             </div>
-            <button class="lightbox-nav next" onclick="changeImage(1, event)">&#10095;</button>
+            
+            <!-- Next Arrow -->
+            <button class="lightbox-nav next" onclick="changeImage(1, event)">
+                <svg viewBox="0 0 24 24" width="36" height="36" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
         </div>
 
     </main>
 
+    <!-- FOOTER -->
     <footer class="site-footer">
         <div class="footer-content">
             <h3>EDISON.CREATE</h3>
