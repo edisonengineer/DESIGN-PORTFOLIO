@@ -18,6 +18,9 @@
     const section = $('pdf-works'), grid = $('pdf-grid'), viewer = $('pdf-viewer'), stage = $('pdf-stage');
     if (!section || !viewer) return;
 
+    /* How much of the available screen the book fills: 0.8 = 80%. Change to taste (0.6 smaller, 0.95 bigger). */
+    const FIT = 0.8;
+
     const WORKER = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
     if (window.pdfjsLib) pdfjsLib.GlobalWorkerOptions.workerSrc = WORKER;
 
@@ -108,7 +111,7 @@
         try {
             const task = pdfjsLib.getDocument(item.file);
             task.onProgress = (p) => {
-                if (my === token && p.total) setLoading(true, 'Loading ' + Math.round((p.loaded / p.total) * 100) + '%');
+                if (my === token && p.total) setLoading(true, 'Loading ' + Math.min(100, Math.round((p.loaded / p.total) * 100)) + '%');
             };
             const doc = await task.promise;
             if (my !== token) { doc.destroy(); return; }
@@ -124,6 +127,17 @@
         }
     }
 
+    /* Size the book box so BOTH pages always fit on screen, centred */
+    function fitBook() {
+        const book = stage.querySelector('.pdf-book');
+        if (!book) return;
+        const aw = stage.clientWidth, ah = stage.clientHeight;
+        const portrait = aw < 640;
+        const pageW = Math.min(portrait ? aw : aw / 2, ah / ratio) * FIT;
+        const w = Math.round(pageW * (portrait ? 1 : 2)), h = Math.round(pageW * ratio);
+        book.style.cssText = 'position:absolute;right:auto;bottom:auto;width:' + w + 'px;height:' + h + 'px;left:' + Math.round((aw - w) / 2) + 'px;top:' + Math.round((ah - h) / 2) + 'px;';
+    }
+
     function buildBook(n) {
         const book = document.createElement('div');
         book.className = 'pdf-book';
@@ -137,11 +151,12 @@
             pageEls.push(p);
         }
 
+        fitBook();
         flip = new St.PageFlip(book, {
             width: 400, height: Math.round(400 * ratio),
             size: 'stretch',
-            minWidth: 240, maxWidth: 1100,
-            minHeight: Math.round(240 * ratio), maxHeight: Math.round(1100 * ratio),
+            minWidth: 120, maxWidth: 4000,
+            minHeight: Math.round(120 * ratio), maxHeight: Math.round(4000 * ratio),
             showCover: true, usePortrait: true,
             drawShadow: true, maxShadowOpacity: 0.45,
             flippingTime: 700, mobileScrollSupport: false
@@ -241,6 +256,11 @@
         else if (e.key === 'ArrowLeft') flip && flip.flipPrev();
         else if (e.key === 'Escape' && !document.fullscreenElement) { if (!panel.hidden) panel.hidden = true; else closePdf(); }
     });
+
+    const refit = () => { if (flip) { fitBook(); flip.update(); } };
+    window.addEventListener('resize', refit);
+    document.addEventListener('fullscreenchange', () => setTimeout(refit, 150));
+    document.addEventListener('webkitfullscreenchange', () => setTimeout(refit, 150));
 
     /* Thumbnails, print, share */
     const panel = $('pdf-thumbs');
