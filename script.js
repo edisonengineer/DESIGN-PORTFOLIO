@@ -1,14 +1,19 @@
 let activeGalleryId = '';
 let isGraphicProject = false;
 
+// --- LEVEL 1: FILTER MAIN CATEGORIES ---
 function filterCategory(category, event) {
     resetToHome(); 
+    
+    // Update active nav links
     document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
     if (event) event.currentTarget.classList.add('active');
 
+    // Hide sub-navs
     document.querySelectorAll('.software-nav').forEach(nav => nav.classList.add('hidden'));
     document.querySelectorAll('.software-link').forEach(link => link.classList.remove('active'));
     
+    // Show specific sub-nav
     if (category === 'engineering') {
         document.getElementById('nav-engineering').classList.remove('hidden');
         document.querySelector('#nav-engineering .software-link').classList.add('active');
@@ -17,6 +22,7 @@ function filterCategory(category, event) {
         document.querySelector('#nav-graphic .software-link').classList.add('active');
     }
 
+    // Filter main grid
     const albums = document.querySelectorAll('.album-card');
     albums.forEach(album => {
         if (category === 'all' || album.classList.contains(category)) {
@@ -27,11 +33,14 @@ function filterCategory(category, event) {
     });
 }
 
+// --- LEVEL 2: FILTER SPECIFIC SOFTWARE ---
 function filterSoftware(category, software, event) {
+    // Update active software link
     const currentNav = document.getElementById(`nav-${category}`);
     currentNav.querySelectorAll('.software-link').forEach(link => link.classList.remove('active'));
     if (event) event.currentTarget.classList.add('active');
 
+    // Filter grid items
     const albums = document.querySelectorAll('.album-card');
     albums.forEach(album => {
         if (software === 'all') {
@@ -42,11 +51,10 @@ function filterSoftware(category, software, event) {
     });
 }
 
-function openHero(title, date, bgImageUrl, galleryId, isGraphic) {
+// --- HERO COVER TRANSITION & DYNAMIC BACKGROUND ---
+function openHero(title, date, bgImageUrl, galleryId, isGraphic, themeColor) {
     document.getElementById('album-grid').classList.remove('active');
     document.getElementById('internal-gallery').classList.remove('active');
-    
-    // Add active class to show the hero cover
     document.getElementById('hero-cover').classList.add('active');
     
     document.getElementById('hero-title').innerText = title;
@@ -55,12 +63,17 @@ function openHero(title, date, bgImageUrl, galleryId, isGraphic) {
     
     activeGalleryId = galleryId;
     isGraphicProject = isGraphic;
+
+    // Apply the custom theme color (or default back to dark charcoal if none is provided)
+    document.body.style.backgroundColor = themeColor || '#1a1a1a';
 }
 
+// --- OPEN INTERNAL GALLERY ---
 function openGallery() {
     document.getElementById('hero-cover').classList.remove('active');
     document.getElementById('internal-gallery').classList.add('active');
     
+    // Toggle CAD tabs based on project type
     const cadNav = document.getElementById('cad-views-nav');
     if (isGraphicProject) {
         cadNav.classList.add('hidden');
@@ -68,12 +81,16 @@ function openGallery() {
         cadNav.classList.remove('hidden');
     }
 
+    // Hide all project images
     document.querySelectorAll('.project-images').forEach(project => {
         project.style.display = 'none';
     });
     
+    // Show only the clicked project's images
     if (activeGalleryId) {
         document.getElementById(activeGalleryId).style.display = 'block';
+        
+        // Auto-select correct view
         if (!isGraphicProject) {
             filterGallery('isometric', null);
         } else {
@@ -82,6 +99,7 @@ function openGallery() {
     }
 }
 
+// --- FILTER INTERNAL CAD VIEWS ---
 function filterGallery(viewType, event) {
     const subLinks = document.querySelectorAll('.sub-link');
     subLinks.forEach(link => link.classList.remove('active'));
@@ -104,8 +122,12 @@ function filterGallery(viewType, event) {
     }
 }
 
+// --- RESET TO MAIN GRID ---
 function resetToHome() {
     document.getElementById('hero-cover').classList.remove('active');
     document.getElementById('internal-gallery').classList.remove('active');
     document.getElementById('album-grid').classList.add('active');
+    
+    // Reset background color to the default theme
+    document.body.style.backgroundColor = '#1a1a1a';
 }
