@@ -112,21 +112,14 @@ function resetToHome() {
     document.body.style.backgroundColor = '#1a1a1a';
 }
 
-// --- FULLSCREEN LIGHTBOX FUNCTIONS ---
-
 function openLightbox(clickedElement) {
     const gallery = document.getElementById(activeGalleryId);
     
-    // Find all images currently visible on the screen based on the active tab (Front, Top, etc.)
     const visibleItems = Array.from(gallery.querySelectorAll('.gallery-item')).filter(item => item.style.display === 'block');
-    
-    // Map their source URLs into our array
     lightboxImages = visibleItems.map(item => item.querySelector('img').src);
     
-    // Find exactly which image was clicked
     currentLightboxIndex = visibleItems.indexOf(clickedElement);
     
-    // Display the image and fade in the lightbox
     document.getElementById('lightbox-img').src = lightboxImages[currentLightboxIndex];
     document.getElementById('lightbox').classList.add('active');
 }
@@ -136,12 +129,9 @@ function closeLightbox() {
 }
 
 function changeImage(direction, event) {
-    // Prevent clicking the arrow from accidentally closing the gallery
     event.stopPropagation();
-    
     currentLightboxIndex += direction;
     
-    // Loop back to the start or end if they click past the limits
     if (currentLightboxIndex < 0) {
         currentLightboxIndex = lightboxImages.length - 1;
     } else if (currentLightboxIndex >= lightboxImages.length) {
