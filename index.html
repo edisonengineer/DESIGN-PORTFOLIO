@@ -18,6 +18,7 @@
             <button class="nav-link" onclick="filterCategory('graphic', event)">Graphic Design</button>
             <button class="nav-link" onclick="showPdfWorks(event)">PDF Works</button>
             <button class="nav-link pdf-back-nav" onclick="document.querySelector('.top-nav .nav-link').click()">&larr; Back to Portfolio</button>
+            <button class="nav-link" onclick="filterCategory('graduation', event)">Graduation</button>
             <a href="mailto:edisonochieng@example.com" class="nav-link contact-link">Contact</a>
         </nav>
 
@@ -50,7 +51,12 @@
                 <div class="album-img" style="background-image: url('https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?q=80&w=1000');"></div>
                 <div class="album-title">Dummy CAD Project</div>
             </div>
-
+            <div class="album-card graduation"
+     onclick="openHero('Graduation', 'SEPTEMBER 2026', 'images/grad-1.jpg', 'graduation-gallery', true, '#1e2233')">
+    <div class="album-img" style="background-image: url('images/grad-1.jpg');"></div>
+    <div class="album-title">Graduation</div>
+</div>
+            
         </section>
 
         <!-- HERO COVER OVERLAY -->
@@ -110,6 +116,26 @@
                     </div>
                 </div>
             </div>
+
+            <div id="graduation-gallery" class="project-images">
+    <div class="masonry-grid">
+        <div class="gallery-item all-views" oncontextmenu="return false;" onclick="openLightbox(this)">
+            <img loading="lazy" decoding="async" src="images/grad-1.jpg" alt="Graduation 1">
+        </div>
+        <div class="gallery-item all-views" oncontextmenu="return false;" onclick="openLightbox(this)">
+            <img loading="lazy" decoding="async" src="images/grad-2.jpg" alt="Graduation 2">
+        </div>
+        <div class="gallery-item all-views" oncontextmenu="return false;" onclick="openLightbox(this)">
+            <img loading="lazy" decoding="async" src="images/grad-3.jpg" alt="Graduation 3">
+        </div>
+        <div class="gallery-item all-views" oncontextmenu="return false;" onclick="openLightbox(this)">
+            <img loading="lazy" decoding="async" src="images/grad-4.jpg" alt="Graduation 4">
+        </div>
+        <div class="gallery-item all-views" oncontextmenu="return false;" onclick="openLightbox(this)">
+            <img loading="lazy" decoding="async" src="images/grad-5.jpg" alt="Graduation 5">
+        </div>
+    </div>
+</div>
         </section>
 
         <!-- PDF WORKS -->
