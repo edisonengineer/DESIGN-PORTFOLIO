@@ -1,13 +1,25 @@
 /* =========================================================================
    PDF WORKS: flipbook viewer (PDF.js + StPageFlip)
-   Additive only: does not modify script.js, it wraps resetToHome().
    ========================================================================= */
+
+// 1. We declare this globally first so the button click NEVER fails
+window.showPdfWorks = function (event) {
+    if (typeof window.resetToHome === 'function') window.resetToHome();
+    
+    document.getElementById('album-grid').classList.remove('active');
+    document.querySelectorAll('.nav-link').forEach((l) => l.classList.remove('active'));
+    if (event && event.currentTarget) event.currentTarget.classList.add('active');
+    
+    document.querySelectorAll('.software-nav').forEach((n) => n.classList.add('hidden'));
+    document.querySelectorAll('.software-link').forEach((l) => l.classList.remove('active'));
+    
+    document.getElementById('pdf-works').classList.add('active');
+};
+
 (function () {
     'use strict';
 
-   /* ---------- EDIT THIS LIST TO ADD YOUR PDFs ----------
-       file:  path to the PDF inside your repo (case-sensitive, no spaces)
-       cover: optional image for the card; if omitted, page 1 is used     */
+    /* ---------- HERE IS YOUR PDF FILE SECURELY LINKED ---------- */
     const PDF_WORKS = [
         { 
             title: 'Simba Corp Prep Guide', 
@@ -18,6 +30,7 @@
 
     const $ = (id) => document.getElementById(id);
     const section = $('pdf-works'), grid = $('pdf-grid'), viewer = $('pdf-viewer'), stage = $('pdf-stage');
+    
     if (!section || !viewer) return;
 
     const WORKER = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
@@ -26,12 +39,13 @@
     let pdfDoc = null, flip = null, pageEls = [], current = null, token = 0, ratio = 1.414;
     const rendered = new Set(), rendering = new Set();
 
-    /* ---------- Cards ---------- */
+    /* ---------- Build the PDF Thumbnail Card ---------- */
     function buildGrid() {
         if (!PDF_WORKS.length) {
-            grid.innerHTML = '<p class="pdf-empty">PDF works coming soon.</p>';
+            grid.innerHTML = '<p class="pdf-empty" style="color: white;">PDF works coming soon.</p>';
             return;
         }
+        
         const io = 'IntersectionObserver' in window ? new IntersectionObserver((entries) => {
             entries.forEach((en) => {
                 if (!en.isIntersecting) return;
@@ -49,8 +63,8 @@
             card.querySelector('.pdf-card-title').textContent = item.title || 'Untitled';
             card.querySelector('.pdf-card-sub').textContent = item.subtitle || '';
             card._item = item;
+            
             card.addEventListener('click', () => openPdf(item));
-            card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openPdf(item); } });
             grid.appendChild(card);
             io ? io.observe(card) : loadThumb(item, card.querySelector('.pdf-thumb'));
         });
@@ -60,7 +74,6 @@
         try {
             if (item.cover) {
                 const img = new Image();
-                img.loading = 'lazy'; img.decoding = 'async'; img.alt = item.title || '';
                 img.src = item.cover;
                 el.appendChild(img);
             } else {
@@ -80,16 +93,19 @@
         }
     }
 
-    /* ---------- Viewer ---------- */
+    /* ---------- Viewer Logic ---------- */
     function setLoading(show, text, isError) {
         const box = $('pdf-loading');
-        box.classList.toggle('show', !!show);
-        box.classList.toggle('error', !!isError);
-        $('pdf-loading-text').textContent = text || '';
+        if(box) {
+            box.classList.toggle('show', !!show);
+            box.classList.toggle('error', !!isError);
+            const textEl = $('pdf-loading-text');
+            if(textEl) textEl.textContent = text || '';
+        }
     }
 
     function teardown() {
-        try { if (flip) flip.destroy(); } catch (e) { /* ignore */ }
+        try { if (flip) flip.destroy(); } catch (e) {}
         flip = null;
         stage.innerHTML = '';
         pageEls = [];
@@ -98,15 +114,18 @@
     }
 
     async function openPdf(item) {
-        if (!window.pdfjsLib || !window.St) { alert('PDF viewer is still loading, please try again.'); return; }
+        if (!window.pdfjsLib || !window.St) { alert('PDF viewer is still loading, please wait a second and try again.'); return; }
         teardown();
         const my = ++token;
         current = item;
-        $('pdf-title').textContent = item.title || '';
+        
+        const titleEl = $('pdf-title');
+        if(titleEl) titleEl.textContent = item.title || '';
+        
         viewer.classList.add('active');
-        viewer.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
         setLoading(true, 'Loading...');
+        
         try {
             const task = pdfjsLib.getDocument(item.file);
             task.onProgress = (p) => {
@@ -150,7 +169,7 @@
         flip.loadFromHTML(pageEls);
 
         const slider = $('pdf-slider');
-        slider.max = n; slider.value = 1;
+        if(slider) { slider.max = n; slider.value = 1; }
 
         flip.on('flip', (e) => sync(e.data));
         flip.on('changeOrientation', () => sync(flip.getCurrentPageIndex()));
@@ -161,8 +180,13 @@
         if (!pdfDoc || !flip) return;
         const n = pdfDoc.numPages;
         const spread = flip.getOrientation() === 'landscape' && idx > 0 && idx < n - 1;
-        $('pdf-counter').textContent = (spread ? (idx + 1) + '-' + (idx + 2) : (idx + 1)) + ' / ' + n;
-        $('pdf-slider').value = idx + 1;
+        
+        const counter = $('pdf-counter');
+        if(counter) counter.textContent = (spread ? (idx + 1) + '-' + (idx + 2) : (idx + 1)) + ' / ' + n;
+        
+        const slider = $('pdf-slider');
+        if(slider) slider.value = idx + 1;
+        
         [0, 1, 2, -1, 3, 4, -2, 5].forEach((o) => renderPage(idx + o));
         rendered.forEach((r) => { if (Math.abs(r - idx) > 14) freePage(r); });
     }
@@ -181,7 +205,7 @@
             if (doc !== pdfDoc) return;
             pageEls[j].replaceChildren(c);
             rendered.add(j);
-        } catch (e) { /* page render cancelled or failed */ }
+        } catch (e) {}
         finally { rendering.delete(j); }
     }
 
@@ -199,50 +223,28 @@
         token++;
         const t = token;
         viewer.classList.remove('active');
-        viewer.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
         setTimeout(() => { if (t === token) teardown(); }, 350);
     }
 
-    function toggleFullscreen() {
-        const d = document;
-        if (d.fullscreenElement || d.webkitFullscreenElement) {
-            (d.exitFullscreen || d.webkitExitFullscreen).call(d);
-        } else {
-            const req = viewer.requestFullscreen || viewer.webkitRequestFullscreen;
-            if (req) req.call(viewer);
-        }
-    }
+    /* ---------- Button Listeners ---------- */
+    const closeBtn = $('pdf-close');
+    if(closeBtn) closeBtn.addEventListener('click', closePdf);
 
-    function download() {
-        if (!current) return;
-        const a = document.createElement('a');
-        a.href = current.file;
-        a.download = current.file.split('/').pop() || 'document.pdf';
-        document.body.appendChild(a); a.click(); a.remove();
-    }
+    const prevBtn = $('pdf-prev');
+    if(prevBtn) prevBtn.addEventListener('click', () => flip && flip.flipPrev());
 
-    /* ---------- Wiring ---------- */
-    $('pdf-close').addEventListener('click', closePdf);
-    $('pdf-download').addEventListener('click', download);
-    $('pdf-fullscreen').addEventListener('click', toggleFullscreen);
-    $('pdf-prev').addEventListener('click', () => flip && flip.flipPrev());
-    $('pdf-next').addEventListener('click', () => flip && flip.flipNext());
-    $('pdf-slider').addEventListener('input', (e) => {
+    const nextBtn = $('pdf-next');
+    if(nextBtn) nextBtn.addEventListener('click', () => flip && flip.flipNext());
+
+    const sliderEl = $('pdf-slider');
+    if(sliderEl) sliderEl.addEventListener('input', (e) => {
         if (!flip) return;
         flip.turnToPage(parseInt(e.target.value, 10) - 1);
         sync(flip.getCurrentPageIndex());
     });
-    if (!viewer.requestFullscreen && !viewer.webkitRequestFullscreen) $('pdf-fullscreen').hidden = true;
 
-    document.addEventListener('keydown', (e) => {
-        if (!viewer.classList.contains('active')) return;
-        if (e.key === 'ArrowRight') flip && flip.flipNext();
-        else if (e.key === 'ArrowLeft') flip && flip.flipPrev();
-        else if (e.key === 'Escape' && !document.fullscreenElement) closePdf();
-    });
-
-    /* Make the existing navigation also close/hide the PDF section */
+    // Make the existing navigation safely close the PDF viewer
     if (typeof window.resetToHome === 'function') {
         const original = window.resetToHome;
         window.resetToHome = function () {
@@ -252,16 +254,7 @@
         };
     }
 
-    /* Called by the "PDF Works" nav button */
-    window.showPdfWorks = function (event) {
-        window.resetToHome();
-        $('album-grid').classList.remove('active');
-        document.querySelectorAll('.nav-link').forEach((l) => l.classList.remove('active'));
-        if (event && event.currentTarget) event.currentTarget.classList.add('active');
-        document.querySelectorAll('.software-nav').forEach((n) => n.classList.add('hidden'));
-        document.querySelectorAll('.software-link').forEach((l) => l.classList.remove('active'));
-        section.classList.add('active');
-    };
-
+    // Finally, build the grid!
     buildGrid();
+
 })();
