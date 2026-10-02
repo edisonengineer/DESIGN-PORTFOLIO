@@ -8,9 +8,11 @@
 </head>
 <body>
 
+    <!-- COLORFUL HEADER & NAVIGATION -->
     <header>
         <h1 class="logo" onclick="resetToHome()">EDISON.CREATE</h1>
         
+        <!-- LEVEL 1: MAIN CATEGORIES -->
         <nav class="top-nav">
             <button class="nav-link active" onclick="filterCategory('all', event)">All Work</button>
             <button class="nav-link" onclick="filterCategory('engineering', event)">Engineering</button>
@@ -18,6 +20,7 @@
             <a href="mailto:edisonochieng@example.com" class="nav-link contact-link">Contact</a>
         </nav>
 
+        <!-- LEVEL 2: ENGINEERING SOFTWARE -->
         <nav class="software-nav hidden" id="nav-engineering">
             <button class="software-link active" onclick="filterSoftware('engineering', 'all', event)">All Engineering</button>
             <button class="software-link" onclick="filterSoftware('engineering', 'solidworks', event)">SolidWorks</button>
@@ -26,6 +29,7 @@
             <button class="software-link" onclick="filterSoftware('engineering', 'revit', event)">Revit</button>
         </nav>
 
+        <!-- LEVEL 2: GRAPHICS SOFTWARE -->
         <nav class="software-nav hidden" id="nav-graphic">
             <button class="software-link active" onclick="filterSoftware('graphic', 'all', event)">All Graphics</button>
             <button class="software-link" onclick="filterSoftware('graphic', 'photoshop', event)">Photoshop</button>
@@ -35,26 +39,26 @@
     </header>
 
     <main>
-        <!-- MAIN GRID -->
+        <!-- STATE 1: MAIN ALBUM GRID -->
         <section id="album-grid" class="view-state active">
             
             <!-- CAMP MEETING APPRECIATION (Illustrator Project) -->
-            <!-- The 'true' at the end tells the script this is a graphic design, so hide CAD tabs! -->
-            <div class="album-card graphic illustrator" onclick="openHero('Camp Meeting Appreciation', 'OCTOBER 2026', 'APPRECIATION-02.png', 'camp-meeting-gallery', true)">
+            <!-- Details: Graphic flag = true, Theme Color = '#3a2024' -->
+            <div class="album-card graphic illustrator" onclick="openHero('Camp Meeting Appreciation', 'OCTOBER 2026', 'APPRECIATION-02.png', 'camp-meeting-gallery', true, '#3a2024')">
                 <div class="album-img" style="background-image: url('APPRECIATION-02.png');"></div>
                 <div class="album-title">Camp Meeting Appreciation</div>
             </div>
 
-            <!-- DUMMY SOLIDWORKS PROJECT (To see the CAD tabs work) -->
-            <div class="album-card engineering solidworks" onclick="openHero('Dummy CAD Project', 'SEPT 2026', 'https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?q=80&w=1000', 'dummy-cad-gallery', false)">
+            <!-- DUMMY CAD PROJECT (SolidWorks Project) -->
+            <!-- Details: Graphic flag = false, Theme Color = '#1b2a33' -->
+            <div class="album-card engineering solidworks" onclick="openHero('Dummy CAD Project', 'SEPT 2026', 'https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?q=80&w=1000', 'dummy-cad-gallery', false, '#1b2a33')">
                 <div class="album-img" style="background-image: url('https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?q=80&w=1000');"></div>
                 <div class="album-title">Dummy CAD Project</div>
             </div>
 
         </section>
 
-        <!-- HERO COVER OVERLAY -->
-        <!-- BUG FIX: Removed 'hidden' class here -->
+        <!-- STATE 2: HERO COVER OVERLAY -->
         <section id="hero-cover" class="view-state">
             <div class="hero-background" id="hero-bg">
                 <div class="hero-content">
@@ -65,11 +69,10 @@
             </div>
         </section>
 
-        <!-- INTERNAL GALLERY -->
-        <!-- BUG FIX: Removed 'hidden' class here -->
+        <!-- STATE 3: INTERNAL GALLERY -->
         <section id="internal-gallery" class="view-state">
             
-            <!-- CAD Tabs (These will automatically hide for Graphic projects) -->
+            <!-- CAD Tabs (These automatically hide for Graphic projects) -->
             <nav class="gallery-sub-nav" id="cad-views-nav">
                 <button class="sub-link active" onclick="filterGallery('isometric', event)">Isometric</button>
                 <button class="sub-link" onclick="filterGallery('front', event)">Front View</button>
@@ -118,6 +121,20 @@
 
         </section>
     </main>
+
+    <!-- COLORFUL FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <h3>EDISON.CREATE</h3>
+            <p>Mechanical Engineer & Graphic Designer based in Nairobi.</p>
+            <div class="footer-links">
+                <a href="mailto:edisonochieng@example.com">Email Me</a>
+                <!-- You can update this to your actual GitHub profile -->
+                <a href="https://github.com/edisonochieng" target="_blank">GitHub</a>
+            </div>
+            <p class="copyright">© 2026 Edison Ochieng. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>
