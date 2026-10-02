@@ -124,3 +124,145 @@ header {
 .footer-links a { color: #fff; text-decoration: none; font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase; border-bottom: 1px solid transparent; transition: border-color 0.3s; }
 .footer-links a:hover { border-color: #fff; }
 .copyright { font-size: 0.8rem; color: rgba(255,255,255,0.4) !important; }
+
+
+/* =====================================================================
+   POLISH LAYER (additive only: no existing selectors renamed or removed)
+   ===================================================================== */
+
+html { -webkit-text-size-adjust: 100%; }
+* { -webkit-tap-highlight-color: transparent; }
+img { max-width: 100%; }
+
+/* 1. Elegant print-style drop shadow ---------------------------------- */
+.gallery-item img {
+    border-radius: 2px;
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.30),
+        0 12px 28px rgba(0, 0, 0, 0.45),
+        0 28px 60px rgba(0, 0, 0, 0.25);
+}
+
+/* 4. 60fps: transforms + opacity only --------------------------------- */
+.album-card,
+.gallery-item {
+    transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+    backface-visibility: hidden;
+}
+.lightbox { will-change: opacity; transform: translateZ(0); }
+.lightbox-nav { transition: color 0.3s ease, transform 0.3s ease; }
+.hero-background { will-change: opacity; transform: translateZ(0); }
+
+/* Hover effects only on devices that truly hover (no sticky hover on touch) */
+@media (hover: hover) {
+    .album-card:hover { transform: translateY(-4px); }
+    .gallery-item:hover { transform: translateY(-4px); }
+}
+@media (hover: none) {
+    .album-card:hover { opacity: 1; }
+}
+
+/* Safe viewport height on mobile browsers (address bar aware) */
+@supports (height: 100dvh) {
+    .hero-background, .lightbox { height: 100dvh; }
+}
+
+/* Comfortable touch targets & wrapping on all sizes */
+.top-nav { flex-wrap: wrap; justify-content: center; }
+.software-nav { flex-wrap: wrap; justify-content: center; }
+.gallery-sub-nav { flex-wrap: wrap; }
+.footer-links { flex-wrap: wrap; }
+#album-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 350px), 1fr)); }
+.masonry-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
+.lightbox-close, .lightbox-nav { touch-action: manipulation; }
+
+/* 2. Mobile responsiveness ------------------------------------------- */
+@media (max-width: 768px) {
+    header { padding: 28px 16px 16px; }
+    .logo { font-size: 1.4rem; letter-spacing: 2px; margin-bottom: 20px; }
+
+    .top-nav { gap: 4px 18px; }
+    .nav-link { min-height: 44px; padding: 10px 2px; font-size: 0.78rem; letter-spacing: 1.2px; display: inline-flex; align-items: center; }
+
+    .software-nav { gap: 2px 18px; margin-top: 12px; }
+    .software-link { min-height: 40px; padding: 6px 2px; font-size: 0.95rem; }
+
+    #album-grid { gap: 28px; padding: 28px 20px 36px; }
+    .album-img { height: 260px; margin-bottom: 12px; }
+    .album-title { font-size: 1.05rem; }
+
+    #internal-gallery { padding: 28px 16px 36px; }
+    .gallery-sub-nav { gap: 4px 22px; margin-bottom: 32px; }
+    .sub-link { min-height: 44px; padding: 8px 2px; font-size: 1rem; }
+    .masonry-grid { gap: 18px; }
+
+    /* Hero typography */
+    .hero-content { padding: 0 24px; }
+    #hero-title { font-size: clamp(2rem, 9vw, 2.6rem); line-height: 1.15; margin-bottom: 8px; }
+    #hero-date { font-size: 0.75rem; letter-spacing: 2px; margin-bottom: 28px; }
+    .view-gallery-btn { padding: 14px 32px; font-size: 0.78rem; min-height: 48px; }
+
+    .site-footer { padding: 44px 20px calc(44px + env(safe-area-inset-bottom)); margin-top: 36px; }
+    .footer-content h3 { font-size: 1.25rem; letter-spacing: 2px; }
+    .footer-links { gap: 12px 24px; }
+}
+
+@media (max-width: 480px) {
+    .album-img { height: 220px; }
+    .masonry-grid { grid-template-columns: 1fr; }
+    .top-nav { gap: 2px 14px; }
+}
+
+/* 3. Mobile lightbox: close at top, arrows in a bottom bar, image clear of both */
+@media (max-width: 768px) {
+    .lightbox-top-bar {
+        padding: calc(8px + env(safe-area-inset-top)) 8px 8px calc(8px + env(safe-area-inset-left));
+    }
+    .lightbox-close { width: 48px; height: 48px; padding: 0; justify-content: center; }
+
+    .lightbox-content {
+        padding:
+            calc(64px + env(safe-area-inset-top))
+            12px
+            calc(84px + env(safe-area-inset-bottom))
+            12px;
+    }
+
+    .lightbox-nav {
+        top: auto; transform: none;
+        bottom: calc(14px + env(safe-area-inset-bottom));
+        width: 56px; height: 56px; padding: 0;
+        display: flex; align-items: center; justify-content: center;
+        color: rgba(255, 255, 255, 0.75);
+    }
+    .lightbox-nav.prev { left: calc(50% - 76px); right: auto; }
+    .lightbox-nav.next { right: calc(50% - 76px); left: auto; }
+    .lightbox-nav:active { color: #fff; transform: scale(0.92); }
+}
+
+/* Phones in landscape: not enough height for a bottom bar, use side arrows */
+@media (max-height: 500px) and (orientation: landscape) {
+    .lightbox-content {
+        padding:
+            calc(12px + env(safe-area-inset-top))
+            calc(72px + env(safe-area-inset-right))
+            calc(12px + env(safe-area-inset-bottom))
+            calc(72px + env(safe-area-inset-left));
+    }
+    .lightbox-nav {
+        top: 50%; bottom: auto; transform: translateY(-50%);
+        width: 56px; height: 56px;
+    }
+    .lightbox-nav.prev { left: calc(8px + env(safe-area-inset-left)); right: auto; }
+    .lightbox-nav.next { right: calc(8px + env(safe-area-inset-right)); left: auto; }
+    .lightbox-nav:active { transform: translateY(-50%) scale(0.92); }
+    .lightbox-top-bar { padding: 6px; }
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
