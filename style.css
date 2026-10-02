@@ -1,10 +1,9 @@
-/* Warm Industrial / Blueprint Aesthetic */
 :root {
-    --bg-color: #2b3036; /* Deep slate blue/grey */
+    --bg-color: #2b3036; 
     --grid-color: rgba(255, 255, 255, 0.05);
-    --text-main: #f4ecd8; /* Warm cream/off-white */
+    --text-main: #f4ecd8; 
     --text-muted: #b8c0c8;
-    --accent-color: #d97736; /* Warm copper/rust */
+    --accent-color: #d97736; 
     --accent-hover: #e88e52;
     --card-bg: #373d45;
 }
@@ -13,7 +12,6 @@ body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--bg-color);
-    /* Creates the blueprint grid lines */
     background-image: 
         linear-gradient(var(--grid-color) 1px, transparent 1px),
         linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
@@ -45,7 +43,7 @@ h1 { margin: 0; font-size: 2.5rem; letter-spacing: 2px; }
 }
 .call-btn:hover { background-color: var(--accent-hover); }
 
-/* Navigation Tabs */
+/* Navigation */
 .main-nav, .sub-nav {
     display: flex;
     justify-content: center;
@@ -65,16 +63,8 @@ h1 { margin: 0; font-size: 2.5rem; letter-spacing: 2px; }
     transition: all 0.3s;
 }
 
-.tab-btn:hover, .sub-btn:hover {
-    border-color: var(--text-main);
-    color: var(--text-main);
-}
-
-.tab-btn.active, .sub-btn.active {
-    background: var(--accent-color);
-    border-color: var(--accent-color);
-    color: #fff;
-}
+.tab-btn:hover, .sub-btn:hover { border-color: var(--text-main); color: var(--text-main); }
+.tab-btn.active, .sub-btn.active { background: var(--accent-color); border-color: var(--accent-color); color: #fff; }
 
 /* Sections */
 .tab-content { display: none; padding: 0 5%; }
@@ -85,80 +75,6 @@ h1 { margin: 0; font-size: 2.5rem; letter-spacing: 2px; }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Project Grids */
-.project-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 25px;
-    margin-top: 30px;
-}
-
-.card {
-    background-color: var(--card-bg);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 8px;
-    overflow: hidden;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-    border-color: var(--accent-color);
-}
-
-.card-img {
-    height: 200px;
-    background-color: #1e2226;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    border-bottom: 2px solid var(--accent-color);
-}
-
-.card-info { padding: 15px; }
-.card-info h3 { margin: 0 0 10px 0; color: var(--accent-color); }
-
-/* Flipbook Setup */
-.flipbook-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 40px 0;
-}
-#flipbook {
-    width: 800px;
-    height: 500px;
-    background: #fff;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
-}
-#flipbook .page {
-    background-color: #f4ecd8; /* Warm paper color */
-    color: #333;
-    padding: 40px;
-    border: 1px solid #ddd;
-}
-.hint { color: var(--text-muted); font-style: italic; margin-top: 15px; }
-
-/* Lightbox Modal */
-.lightbox {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0; top: 0; width: 100%; height: 100%;
-    background-color: rgba(15, 18, 21, 0.9);
-    align-items: center; justify-content: center;
-}
-.lightbox img { max-width: 90%; max-height: 90%; border: 3px solid var(--accent-color); }
-.close-btn {
-    position: absolute;
-    top: 20px; right: 40px;
-    color: #fff; font-size: 40px;
-    font-weight: bold; cursor: pointer;
-}
 /* About Section */
 .about-container {
     background-color: var(--card-bg);
@@ -166,26 +82,62 @@ h1 { margin: 0; font-size: 2.5rem; letter-spacing: 2px; }
     border-radius: 8px;
     border-left: 4px solid var(--accent-color);
     max-width: 800px;
-    margin: 0 auto;
+    margin: 0 auto 40px auto;
 }
 
-/* Card Images using Background to crop correctly */
+/* Project Grids & Cards */
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+    padding-bottom: 50px;
+}
+
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    /* Springy 3D extrude animation */
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+    /* Anti-highlight protection */
+    user-select: none; 
+    -webkit-user-select: none; 
+}
+
+.card:hover {
+    transform: scale(1.04) translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.6);
+    border-color: var(--accent-color);
+}
+
 .card-img {
     height: 200px;
     background-color: #1e2226;
     background-size: cover;
     background-position: center;
-    cursor: pointer;
     border-bottom: 2px solid var(--accent-color);
+    /* No cursor pointer, appears static */
 }
 
-/* Contact Form Styling */
+.card-info { padding: 15px; }
+.card-info h3 { margin: 0 0 10px 0; color: var(--accent-color); }
+.card-info p { margin: 0; font-size: 0.95rem; color: var(--text-main); }
+
+/* Flipbook Setup */
+.flipbook-container { display: flex; flex-direction: column; align-items: center; margin: 40px 0; }
+#flipbook { width: 800px; height: 500px; background: #fff; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+#flipbook .page { background-color: #f4ecd8; color: #333; padding: 40px; border: 1px solid #ddd; }
+.hint { color: var(--text-muted); font-style: italic; margin-top: 15px; }
+
+/* Contact Form */
 .contact-form {
     display: flex;
     flex-direction: column;
     gap: 15px;
     max-width: 500px;
-    margin: 0 auto;
+    margin: 0 auto 50px auto;
     background-color: var(--card-bg);
     padding: 30px;
     border-radius: 8px;
@@ -202,10 +154,7 @@ h1 { margin: 0; font-size: 2.5rem; letter-spacing: 2px; }
     box-sizing: border-box;
 }
 
-.contact-form input:focus, .contact-form textarea:focus {
-    outline: none;
-    border-color: var(--accent-color);
-}
+.contact-form input:focus, .contact-form textarea:focus { outline: none; border-color: var(--accent-color); }
 
 .submit-btn {
     background-color: var(--accent-color);
@@ -218,7 +167,4 @@ h1 { margin: 0; font-size: 2.5rem; letter-spacing: 2px; }
     cursor: pointer;
     transition: background 0.3s;
 }
-
-.submit-btn:hover {
-    background-color: var(--accent-hover);
-}
+.submit-btn:hover { background-color: var(--accent-hover); }
