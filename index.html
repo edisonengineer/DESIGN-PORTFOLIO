@@ -16,10 +16,8 @@
             <button class="nav-link active" onclick="filterCategory('all', event)">All Work</button>
             <button class="nav-link" onclick="filterCategory('engineering', event)">Engineering</button>
             <button class="nav-link" onclick="filterCategory('graphic', event)">Graphic Design</button>
-            
-            <!-- ADD THIS LINE RIGHT HERE: -->
             <button class="nav-link" onclick="showPdfWorks(event)">PDF Works</button>
-            
+            <button class="nav-link pdf-back-nav" onclick="document.querySelector('.top-nav .nav-link').click()">&larr; Back to Portfolio</button>
             <a href="mailto:edisonochieng@example.com" class="nav-link contact-link">Contact</a>
         </nav>
 
@@ -114,6 +112,15 @@
             </div>
         </section>
 
+        <!-- PDF WORKS -->
+        <section id="pdf-works" class="view-state">
+            <div class="pdf-works-head">
+                <h2>PDF Works</h2>
+                <p>Select a document to read it like a book</p>
+            </div>
+            <div id="pdf-grid"></div>
+        </section>
+
         <!-- STATE 4: FULLSCREEN LIGHTBOX (Pixieset Style) -->
         <div id="lightbox" class="lightbox" onclick="closeLightbox()">
             
@@ -149,6 +156,36 @@
 
     </main>
 
+    <!-- PDF FLIPBOOK VIEWER -->
+    <div id="pdf-viewer" class="pdf-viewer" role="dialog" aria-modal="true" aria-label="PDF viewer" aria-hidden="true">
+        <div class="pdf-toolbar">
+            <button class="pdf-btn pdf-back" id="pdf-close" title="Back" aria-label="Close viewer"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></button>
+            <div class="pdf-title" id="pdf-title"></div>
+            <button class="pdf-btn" id="pdf-grid-btn" title="Thumbnails" aria-label="Thumbnails"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6" height="6"></rect><rect x="14" y="4" width="6" height="6"></rect><rect x="4" y="14" width="6" height="6"></rect><rect x="14" y="14" width="6" height="6"></rect></svg></button>
+            <button class="pdf-btn" id="pdf-print" title="Print" aria-label="Print"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M7 9V4h10v5"></path><rect x="4" y="9" width="16" height="8" rx="1"></rect><rect x="7" y="14" width="10" height="6"></rect></svg></button>
+            <button class="pdf-btn" id="pdf-download" title="Download PDF" aria-label="Download PDF"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><polyline points="7 11 12 16 17 11"></polyline><path d="M4 20h16"></path></svg></button>
+            <button class="pdf-btn" id="pdf-share" title="Share" aria-label="Share"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="2.5"></circle><circle cx="18" cy="6" r="2.5"></circle><circle cx="18" cy="18" r="2.5"></circle><line x1="8.3" y1="10.8" x2="15.7" y2="7.2"></line><line x1="8.3" y1="13.2" x2="15.7" y2="16.8"></line></svg></button>
+            <button class="pdf-btn" id="pdf-fullscreen" title="Fullscreen" aria-label="Toggle fullscreen"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 9 4 4 9 4"></polyline><polyline points="15 4 20 4 20 9"></polyline><polyline points="20 15 20 20 15 20"></polyline><polyline points="9 20 4 20 4 15"></polyline></svg></button>
+        </div>
+
+        <div class="pdf-stage" id="pdf-stage"></div>
+        <div class="pdf-thumbs" id="pdf-thumbs" hidden></div>
+
+        <button class="pdf-nav prev" id="pdf-prev" aria-label="Previous page">
+            <svg viewBox="0 0 24 24" width="36" height="36" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button class="pdf-nav next" id="pdf-next" aria-label="Next page">
+            <svg viewBox="0 0 24 24" width="36" height="36" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+
+        <div class="pdf-bottom">
+            <span class="pdf-counter" id="pdf-counter">1 / 1</span>
+            <input type="range" id="pdf-slider" min="1" max="1" value="1" aria-label="Page">
+        </div>
+
+        <div class="pdf-loading" id="pdf-loading"><div class="pdf-spinner"></div><span id="pdf-loading-text">Loading...</span></div>
+    </div>
+
     <!-- FOOTER -->
     <footer class="site-footer">
         <div class="footer-content">
@@ -163,5 +200,8 @@
     </footer>
 
     <script src="script.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+    <script defer src="pdf-viewer.js"></script>
 </body>
 </html>
