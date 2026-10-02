@@ -42,10 +42,11 @@ function filterSoftware(category, software, event) {
     });
 }
 
-// FIX: Added 'isGraphic' as a direct parameter so it never fails
 function openHero(title, date, bgImageUrl, galleryId, isGraphic) {
     document.getElementById('album-grid').classList.remove('active');
     document.getElementById('internal-gallery').classList.remove('active');
+    
+    // Add active class to show the hero cover
     document.getElementById('hero-cover').classList.add('active');
     
     document.getElementById('hero-title').innerText = title;
@@ -62,9 +63,9 @@ function openGallery() {
     
     const cadNav = document.getElementById('cad-views-nav');
     if (isGraphicProject) {
-        cadNav.classList.add('hidden'); // Hides isometric/top tabs for Photoshop
+        cadNav.classList.add('hidden');
     } else {
-        cadNav.classList.remove('hidden'); // Shows them for SolidWorks
+        cadNav.classList.remove('hidden');
     }
 
     document.querySelectorAll('.project-images').forEach(project => {
