@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edison Ochieng | Portfolio</title>
+    <title>Edison Ochieng | Engineering & Design Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <!-- jQuery required for flipbook libraries -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
@@ -42,38 +43,40 @@
         <section id="engineering" class="tab-content">
             <h2>Engineering & CAD Portfolio</h2>
             
-            <!-- Sub-tabs for Engineering Software -->
             <nav class="sub-nav" id="eng-nav">
                 <button class="sub-btn active" onclick="filterProjects('eng', 'all')">All</button>
                 <button class="sub-btn" onclick="filterProjects('eng', 'solidworks')">SolidWorks</button>
                 <button class="sub-btn" onclick="filterProjects('eng', 'inventor')">Inventor Pro</button>
                 <button class="sub-btn" onclick="filterProjects('eng', 'autocad')">AutoCAD</button>
                 <button class="sub-btn" onclick="filterProjects('eng', 'fusion360')">Fusion 360</button>
+                <button class="sub-btn" onclick="filterProjects('eng', 'mathcad')">Mathcad</button>
+                <button class="sub-btn" onclick="filterProjects('eng', 'creo')">Creo</button>
+                <button class="sub-btn" onclick="filterProjects('eng', 'onshape')">Onshape</button>
             </nav>
 
             <div class="project-grid" id="eng-grid">
                 <!-- SolidWorks Project -->
-                <div class="card solidworks">
-                    <div class="card-img" style="background-image: url('assets/engineering/solidworks/ev-cooling.jpg');" onclick="openLightbox('assets/engineering/solidworks/ev-cooling.jpg')"></div>
+                <div class="card solidworks" oncontextmenu="return false;">
+                    <div class="card-img" style="background-image: url('assets/engineering/solidworks/ev-cooling.jpg');"></div>
                     <div class="card-info">
                         <h3>EV Battery Cooling Pack</h3>
-                        <p>SolidWorks: Forced convection thermal simulation.</p>
+                        <p>SolidWorks: Forced convection thermal simulation utilizing a U-channel flow arrangement to maintain optimal Li-ion operating temperatures.</p>
                     </div>
                 </div>
-                <!-- Inventor Project 1 -->
-                <div class="card inventor">
-                    <div class="card-img" style="background-image: url('assets/engineering/inventor/project1.jpg');" onclick="openLightbox('assets/engineering/inventor/project1.jpg')"></div>
+                <!-- Inventor Project -->
+                <div class="card inventor" oncontextmenu="return false;">
+                    <div class="card-img" style="background-image: url('assets/engineering/inventor/poultry-machine.jpg');"></div>
                     <div class="card-info">
-                        <h3>Inventor Project 1</h3>
-                        <p>Inventor: Mechanical drive sizing.</p>
+                        <h3>Poultry De-feathering Machine</h3>
+                        <p>Inventor: Mechanical drive sizing and Design for Manufacturability (DFM) applied to sheet-metal components during my KIRDI attachment.</p>
                     </div>
                 </div>
-                <!-- Inventor Project 2 -->
-                <div class="card inventor">
-                    <div class="card-img" style="background-image: url('assets/engineering/inventor/project2.jpg');" onclick="openLightbox('assets/engineering/inventor/project2.jpg')"></div>
+                <!-- AutoCAD Project -->
+                <div class="card autocad" oncontextmenu="return false;">
+                    <div class="card-img" style="background-image: url('assets/engineering/autocad/layout.jpg');"></div>
                     <div class="card-info">
-                        <h3>Inventor Project 2</h3>
-                        <p>Inventor: Sheet metal enclosure.</p>
+                        <h3>Workshop Layout & Schematics</h3>
+                        <p>AutoCAD: Detailed 2D floor plans and mechanical schematics focusing on efficient workspace flow and safety clearances.</p>
                     </div>
                 </div>
             </div>
@@ -83,7 +86,6 @@
         <section id="graphic" class="tab-content">
             <h2>Graphic Design</h2>
             
-            <!-- Sub-tabs for Graphic Software -->
             <nav class="sub-nav" id="gfx-nav">
                 <button class="sub-btn active" onclick="filterProjects('gfx', 'all')">All</button>
                 <button class="sub-btn" onclick="filterProjects('gfx', 'photoshop')">Photoshop</button>
@@ -93,19 +95,19 @@
 
             <div class="project-grid" id="gfx-grid">
                 <!-- Illustrator Project -->
-                <div class="card illustrator">
-                    <div class="card-img" style="background-image: url('assets/graphics/illustrator/poster1.jpg');" onclick="openLightbox('assets/graphics/illustrator/poster1.jpg')"></div>
+                <div class="card illustrator" oncontextmenu="return false;">
+                    <div class="card-img" style="background-image: url('assets/graphics/illustrator/event-branding.jpg');"></div>
                     <div class="card-info">
-                        <h3>Event Branding</h3>
-                        <p>Illustrator: Vector poster design.</p>
+                        <h3>Event Branding & Vector Art</h3>
+                        <p>Illustrator: Custom vector typography and layout design for local summits, ensuring high-quality print and digital scalability.</p>
                     </div>
                 </div>
                 <!-- Photoshop Project -->
-                <div class="card photoshop">
-                    <div class="card-img" style="background-image: url('assets/graphics/photoshop/edit1.jpg');" onclick="openLightbox('assets/graphics/photoshop/edit1.jpg')"></div>
+                <div class="card photoshop" oncontextmenu="return false;">
+                    <div class="card-img" style="background-image: url('assets/graphics/photoshop/composition.jpg');"></div>
                     <div class="card-info">
-                        <h3>Photo Manipulation</h3>
-                        <p>Photoshop: Digital composition.</p>
+                        <h3>Digital Composition</h3>
+                        <p>Photoshop: Advanced layer masking, color grading, and lighting adjustments to create a seamless, high-impact marketing poster.</p>
                     </div>
                 </div>
             </div>
@@ -114,12 +116,15 @@
         <!-- FINAL YEAR PROJECT SECTION -->
         <section id="final-project" class="tab-content">
             <h2>Final Year Project: FEA & Material Failure</h2>
+            <p>Nakajima test simulation and FLC generation for automotive body stamping.</p>
             <div class="flipbook-container">
                 <div id="flipbook">
-                    <div class="page"><h4>Cover Page</h4></div>
-                    <div class="page"><h4>Abstract</h4></div>
+                    <div class="page"><h4>Cover Page</h4><p>Project Title & Details</p></div>
+                    <div class="page"><h4>Abstract</h4><p>Summary of GTN-Hill’48 coupled model analysis.</p></div>
+                    <div class="page"><h4>Methodology</h4><p>Simulation parameters and mesh convergence.</p></div>
+                    <div class="page"><h4>Results</h4><p>Forming limit curves and conclusion.</p></div>
                 </div>
-                <p class="hint">Click or drag the corners to flip.</p>
+                <p class="hint">Click or drag the corners to flip the pages.</p>
             </div>
         </section>
 
@@ -128,8 +133,7 @@
             <h2>Contact Me</h2>
             <p>Ready to collaborate? Send me an email directly using the form below.</p>
             
-            <!-- Formspree endpoint (replace YOUR_EMAIL with a formspree.io link later) -->
-            <form class="contact-form" action="mailto:edisonochieng@example.com" method="POST" enctype="text/plain">
+            <form class="contact-form" action="https://formspree.io/f/YOUR_ENDPOINT_HERE" method="POST">
                 <input type="text" name="name" placeholder="Your Name" required>
                 <input type="email" name="email" placeholder="Your Email" required>
                 <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
@@ -138,12 +142,8 @@
         </section>
     </main>
 
-    <!-- LIGHTBOX -->
-    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-        <span class="close-btn">&times;</span>
-        <img id="lightbox-img" src="" alt="Full Screen Design">
-    </div>
-
+    <!-- Flipbook library script should be placed here once downloaded -->
+    <!-- <script src="turn.min.js"></script> -->
     <script src="script.js"></script>
 </body>
 </html>
