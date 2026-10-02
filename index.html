@@ -3,147 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edison Ochieng | Engineering & Design Portfolio</title>
+    <title>Edison Ochieng | Design Portfolio</title>
     <link rel="stylesheet" href="style.css">
-    <!-- jQuery required for flipbook libraries -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
+    <!-- PIXIESET STYLE HEADER & NAV -->
     <header>
-        <div class="header-container">
-            <h1>EDISON OCHIENG</h1>
-            <p class="subtitle">Mechanical Engineer & Graphic Designer</p>
-        </div>
-        <div class="contact-action">
-            <a href="tel:+254000000000" class="call-btn">📞 Call Me</a>
-        </div>
+        <h1 class="logo" onclick="resetToHome()">EDISON.CREATE</h1>
+        <nav class="top-nav">
+            <button class="nav-link active" onclick="filterMain('all')">All Work</button>
+            <button class="nav-link" onclick="filterMain('solidworks')">SolidWorks</button>
+            <button class="nav-link" onclick="filterMain('inventor')">Inventor</button>
+            <button class="nav-link" onclick="filterMain('graphic')">Graphic Design</button>
+            <a href="mailto:edisonochieng@example.com" class="nav-link contact-link">Contact</a>
+        </nav>
     </header>
 
-    <!-- MAIN TABS -->
-    <nav class="main-nav">
-        <button class="tab-btn active" onclick="openMainTab(event, 'about')">About Me</button>
-        <button class="tab-btn" onclick="openMainTab(event, 'engineering')">Engineering Design</button>
-        <button class="tab-btn" onclick="openMainTab(event, 'graphic')">Graphic Design</button>
-        <button class="tab-btn" onclick="openMainTab(event, 'final-project')">Final Year Project</button>
-        <button class="tab-btn" onclick="openMainTab(event, 'contact')">Contact</button>
-    </nav>
-
     <main>
-        <!-- ABOUT ME SECTION -->
-        <section id="about" class="tab-content active">
-            <h2>About Me</h2>
-            <div class="about-container">
-                <p>Hello! I am a passionate Mechanical Engineer and Graphic Designer based in Nairobi. With experience spanning automotive structural simulations, EV thermal management, and precision manufacturing, I bridge the gap between heavy engineering and creative visual design.</p>
-                <p>I specialize in 3D modeling, finite element analysis (FEA), and creating compelling brand identities.</p>
+        <!-- STATE 1: THE MAIN ALBUM GRID (Thumbnails) -->
+        <section id="album-grid" class="view-state active">
+            
+            <!-- SolidWorks Album Thumbnail -->
+            <div class="album-card solidworks" onclick="openHero('EV Battery Cooling Pack', '17TH SEPTEMBER, 2026', 'assets/engineering/ev-cover.jpg')">
+                <div class="album-img" style="background-image: url('assets/engineering/ev-cover.jpg');"></div>
+                <div class="album-title">EV Battery Cooling Pack</div>
+            </div>
+
+            <!-- Inventor Album Thumbnail -->
+            <div class="album-card inventor" onclick="openHero('Poultry De-feathering Machine', 'AUGUST, 2026', 'assets/engineering/poultry-cover.jpg')">
+                <div class="album-img" style="background-image: url('assets/engineering/poultry-cover.jpg');"></div>
+                <div class="album-title">Poultry De-feathering Machine</div>
+            </div>
+
+        </section>
+
+        <!-- STATE 2: THE HERO COVER (Like the "Daisy" screen) -->
+        <section id="hero-cover" class="view-state hidden">
+            <div class="hero-background" id="hero-bg">
+                <!-- Overlay content -->
+                <div class="hero-content">
+                    <h2 id="hero-title">Project Title</h2>
+                    <p id="hero-date">DATE / SUBTITLE</p>
+                    <button class="view-gallery-btn" onclick="openGallery()">VIEW GALLERY</button>
+                </div>
             </div>
         </section>
 
-        <!-- ENGINEERING DESIGN SECTION -->
-        <section id="engineering" class="tab-content">
-            <h2>Engineering & CAD Portfolio</h2>
+        <!-- STATE 3: THE INTERNAL GALLERY (After clicking View Gallery) -->
+        <section id="internal-gallery" class="view-state hidden">
             
-            <nav class="sub-nav" id="eng-nav">
-                <button class="sub-btn active" onclick="filterProjects('eng', 'all')">All</button>
-                <button class="sub-btn" onclick="filterProjects('eng', 'solidworks')">SolidWorks</button>
-                <button class="sub-btn" onclick="filterProjects('eng', 'inventor')">Inventor Pro</button>
-                <button class="sub-btn" onclick="filterProjects('eng', 'autocad')">AutoCAD</button>
-                <button class="sub-btn" onclick="filterProjects('eng', 'fusion360')">Fusion 360</button>
-                <button class="sub-btn" onclick="filterProjects('eng', 'mathcad')">Mathcad</button>
-                <button class="sub-btn" onclick="filterProjects('eng', 'creo')">Creo</button>
-                <button class="sub-btn" onclick="filterProjects('eng', 'onshape')">Onshape</button>
+            <!-- Sub-tabs for CAD views (Like Regal, Noir, Bronze) -->
+            <nav class="gallery-sub-nav">
+                <button class="sub-link active" onclick="filterGallery('isometric')">Isometric</button>
+                <button class="sub-link" onclick="filterGallery('front')">Front View</button>
+                <button class="sub-link" onclick="filterGallery('side')">Side View</button>
+                <button class="sub-link" onclick="filterGallery('top')">Top Plan</button>
             </nav>
 
-            <div class="project-grid" id="eng-grid">
-                <!-- SolidWorks Project -->
-                <div class="card solidworks" oncontextmenu="return false;">
-                    <div class="card-img" style="background-image: url('assets/engineering/solidworks/ev-cooling.jpg');"></div>
-                    <div class="card-info">
-                        <h3>EV Battery Cooling Pack</h3>
-                        <p>SolidWorks: Forced convection thermal simulation utilizing a U-channel flow arrangement to maintain optimal Li-ion operating temperatures.</p>
-                    </div>
+            <!-- The Images -->
+            <div class="masonry-grid">
+                <!-- Isometric Images -->
+                <div class="gallery-item isometric oncontextmenu="return false;">
+                    <img src="assets/engineering/iso1.jpg" alt="Isometric View">
                 </div>
-                <!-- Inventor Project -->
-                <div class="card inventor" oncontextmenu="return false;">
-                    <div class="card-img" style="background-image: url('assets/engineering/inventor/poultry-machine.jpg');"></div>
-                    <div class="card-info">
-                        <h3>Poultry De-feathering Machine</h3>
-                        <p>Inventor: Mechanical drive sizing and Design for Manufacturability (DFM) applied to sheet-metal components during my KIRDI attachment.</p>
-                    </div>
+                <!-- Front Images -->
+                <div class="gallery-item front" oncontextmenu="return false;">
+                    <img src="assets/engineering/front1.jpg" alt="Front View">
                 </div>
-                <!-- AutoCAD Project -->
-                <div class="card autocad" oncontextmenu="return false;">
-                    <div class="card-img" style="background-image: url('assets/engineering/autocad/layout.jpg');"></div>
-                    <div class="card-info">
-                        <h3>Workshop Layout & Schematics</h3>
-                        <p>AutoCAD: Detailed 2D floor plans and mechanical schematics focusing on efficient workspace flow and safety clearances.</p>
-                    </div>
+                <!-- Side Images -->
+                <div class="gallery-item side" oncontextmenu="return false;">
+                    <img src="assets/engineering/side1.jpg" alt="Side View">
                 </div>
             </div>
-        </section>
 
-        <!-- GRAPHIC DESIGN SECTION -->
-        <section id="graphic" class="tab-content">
-            <h2>Graphic Design</h2>
-            
-            <nav class="sub-nav" id="gfx-nav">
-                <button class="sub-btn active" onclick="filterProjects('gfx', 'all')">All</button>
-                <button class="sub-btn" onclick="filterProjects('gfx', 'photoshop')">Photoshop</button>
-                <button class="sub-btn" onclick="filterProjects('gfx', 'illustrator')">Illustrator</button>
-                <button class="sub-btn" onclick="filterProjects('gfx', 'indesign')">InDesign</button>
-            </nav>
-
-            <div class="project-grid" id="gfx-grid">
-                <!-- Illustrator Project -->
-                <div class="card illustrator" oncontextmenu="return false;">
-                    <div class="card-img" style="background-image: url('assets/graphics/illustrator/event-branding.jpg');"></div>
-                    <div class="card-info">
-                        <h3>Event Branding & Vector Art</h3>
-                        <p>Illustrator: Custom vector typography and layout design for local summits, ensuring high-quality print and digital scalability.</p>
-                    </div>
-                </div>
-                <!-- Photoshop Project -->
-                <div class="card photoshop" oncontextmenu="return false;">
-                    <div class="card-img" style="background-image: url('assets/graphics/photoshop/composition.jpg');"></div>
-                    <div class="card-info">
-                        <h3>Digital Composition</h3>
-                        <p>Photoshop: Advanced layer masking, color grading, and lighting adjustments to create a seamless, high-impact marketing poster.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- FINAL YEAR PROJECT SECTION -->
-        <section id="final-project" class="tab-content">
-            <h2>Final Year Project: FEA & Material Failure</h2>
-            <p>Nakajima test simulation and FLC generation for automotive body stamping.</p>
-            <div class="flipbook-container">
-                <div id="flipbook">
-                    <div class="page"><h4>Cover Page</h4><p>Project Title & Details</p></div>
-                    <div class="page"><h4>Abstract</h4><p>Summary of GTN-Hill’48 coupled model analysis.</p></div>
-                    <div class="page"><h4>Methodology</h4><p>Simulation parameters and mesh convergence.</p></div>
-                    <div class="page"><h4>Results</h4><p>Forming limit curves and conclusion.</p></div>
-                </div>
-                <p class="hint">Click or drag the corners to flip the pages.</p>
-            </div>
-        </section>
-
-        <!-- CONTACT SECTION -->
-        <section id="contact" class="tab-content">
-            <h2>Contact Me</h2>
-            <p>Ready to collaborate? Send me an email directly using the form below.</p>
-            
-            <form class="contact-form" action="https://formspree.io/f/YOUR_ENDPOINT_HERE" method="POST">
-                <input type="text" name="name" placeholder="Your Name" required>
-                <input type="email" name="email" placeholder="Your Email" required>
-                <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-                <button type="submit" class="submit-btn">Send Message</button>
-            </form>
         </section>
     </main>
 
-    <!-- Flipbook library script should be placed here once downloaded -->
-    <!-- <script src="turn.min.js"></script> -->
     <script src="script.js"></script>
 </body>
 </html>
