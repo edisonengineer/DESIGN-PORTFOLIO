@@ -38,24 +38,24 @@
         <!-- MAIN GRID -->
         <section id="album-grid" class="view-state active">
             
-            <!-- YOUR PHOTOSHOP TEST (Uses your 2 repo images) -->
-            <!-- Notice the "true" at the end. This tells the code it is a Graphic project! -->
-            <div class="album-card graphic photoshop" onclick="openHero('My Photoshop Test', 'OCTOBER 2026', 'onevoice-01.png', 'photoshop-test-1', true)">
-                <div class="album-img" style="background-image: url('onevoice-01.png');"></div>
-                <div class="album-title">My Photoshop Test</div>
+            <!-- CAMP MEETING APPRECIATION (Illustrator Project) -->
+            <!-- The 'true' at the end tells the script this is a graphic design, so hide CAD tabs! -->
+            <div class="album-card graphic illustrator" onclick="openHero('Camp Meeting Appreciation', 'OCTOBER 2026', 'APPRECIATION-02.png', 'camp-meeting-gallery', true)">
+                <div class="album-img" style="background-image: url('APPRECIATION-02.png');"></div>
+                <div class="album-title">Camp Meeting Appreciation</div>
             </div>
 
-            <!-- A DUMMY SOLIDWORKS TEST -->
-            <!-- Notice the "false" at the end. This tells the code it is an Engineering project! -->
-            <div class="album-card engineering solidworks" onclick="openHero('Dummy SolidWorks', 'SEPT 2026', 'https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?q=80&w=1000', 'solidworks-test-1', false)">
+            <!-- DUMMY SOLIDWORKS PROJECT (To see the CAD tabs work) -->
+            <div class="album-card engineering solidworks" onclick="openHero('Dummy CAD Project', 'SEPT 2026', 'https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?q=80&w=1000', 'dummy-cad-gallery', false)">
                 <div class="album-img" style="background-image: url('https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?q=80&w=1000');"></div>
-                <div class="album-title">Dummy SolidWorks (Has CAD Tabs)</div>
+                <div class="album-title">Dummy CAD Project</div>
             </div>
 
         </section>
 
         <!-- HERO COVER OVERLAY -->
-        <section id="hero-cover" class="view-state hidden">
+        <!-- BUG FIX: Removed 'hidden' class here -->
+        <section id="hero-cover" class="view-state">
             <div class="hero-background" id="hero-bg">
                 <div class="hero-content">
                     <h2 id="hero-title">Project Title</h2>
@@ -66,9 +66,10 @@
         </section>
 
         <!-- INTERNAL GALLERY -->
-        <section id="internal-gallery" class="view-state hidden">
+        <!-- BUG FIX: Removed 'hidden' class here -->
+        <section id="internal-gallery" class="view-state">
             
-            <!-- CAD Tabs (These will automatically hide for Photoshop) -->
+            <!-- CAD Tabs (These will automatically hide for Graphic projects) -->
             <nav class="gallery-sub-nav" id="cad-views-nav">
                 <button class="sub-link active" onclick="filterGallery('isometric', event)">Isometric</button>
                 <button class="sub-link" onclick="filterGallery('front', event)">Front View</button>
@@ -76,22 +77,35 @@
                 <button class="sub-link" onclick="filterGallery('top', event)">Top Plan</button>
             </nav>
 
-            <!-- 1. YOUR PHOTOSHOP GALLERY -->
-            <div id="photoshop-test-1" class="project-images">
+            <!-- 1. CAMP MEETING APPRECIATION IMAGES -->
+            <div id="camp-meeting-gallery" class="project-images">
                 <div class="masonry-grid">
-                    <!-- Image 1 -->
                     <div class="gallery-item all-views" oncontextmenu="return false;">
-                        <img src="onevoice-01.png" alt="Test Image 1">
+                        <img src="APPRECIATION-02.png" alt="Appreciation 2">
                     </div>
-                    <!-- Image 2 -->
                     <div class="gallery-item all-views" oncontextmenu="return false;">
-                        <img src="Untitled-1-01.png" alt="Test Image 2">
+                        <img src="APPRECIATION-03.png" alt="Appreciation 3">
+                    </div>
+                    <div class="gallery-item all-views" oncontextmenu="return false;">
+                        <img src="APPRECIATION-04.png" alt="Appreciation 4">
+                    </div>
+                    <div class="gallery-item all-views" oncontextmenu="return false;">
+                        <img src="APPRECIATION-06.png" alt="Appreciation 6">
+                    </div>
+                    <div class="gallery-item all-views" oncontextmenu="return false;">
+                        <img src="APPRECIATION-06-06.png" alt="Appreciation 6-06">
+                    </div>
+                    <div class="gallery-item all-views" oncontextmenu="return false;">
+                        <img src="onevoice-01.png" alt="One Voice">
+                    </div>
+                    <div class="gallery-item all-views" oncontextmenu="return false;">
+                        <img src="Untitled-1-01.png" alt="Untitled">
                     </div>
                 </div>
             </div>
 
-            <!-- 2. DUMMY SOLIDWORKS GALLERY -->
-            <div id="solidworks-test-1" class="project-images">
+            <!-- 2. DUMMY CAD IMAGES -->
+            <div id="dummy-cad-gallery" class="project-images">
                 <div class="masonry-grid">
                     <div class="gallery-item isometric" oncontextmenu="return false;">
                         <img src="https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?q=80&w=1000" alt="Iso">
