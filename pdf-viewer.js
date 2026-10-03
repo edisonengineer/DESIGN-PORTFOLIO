@@ -9,7 +9,8 @@
        file:  path to the PDF inside your repo (case-sensitive, no spaces)
        cover: optional image for the card; if omitted, page 1 is used     */
     const PDF_WORKS = [
-        { title: 'Simba Corp Graduate Engineer Trainee: Prep Guide', subtitle: 'Interview & Written Prep Guide', file: 'simba-corp-prep-guide.pdf' },{ title: 'SABBATH SCHOOL REPORT_26_09', subtitle: 'Interview & Written Prep Guide', file: 'SABBATHSCHOOLREPORT_26_09.pdf' },
+        { title: 'Simba Corp Graduate Engineer Trainee: Prep Guide', subtitle: 'Interview & Written Prep Guide', file: 'simba-corp-prep-guide.pdf' },
+       { title: 'SABBATH SCHOOL REPORT_26_09', subtitle: 'Interview & Written Prep Guide', file: 'SABBATHSCHOOLREPORT_26_09.pdf' },
         // { title: 'School Magazine, Oct-Nov 2026', subtitle: 'Layout & Design', file: 'pdfs/school-magazine.pdf' },
         // { title: 'Company Profile', subtitle: 'Brochure', file: 'pdfs/company-profile.pdf', cover: 'pdfs/company-cover.jpg' },
     ];
